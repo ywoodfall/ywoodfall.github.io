@@ -62,14 +62,29 @@
     <style>
 
       /* Disallow very small viewports*/
-      body {
+      html,body {
         min-width:120px;
+        height: 100%;
+        margin: 0;
+      }
+
+      #wrap {
+        min-height: 100%;
+        margin-top: -1.5em;
+        margin-bottom: -1.5em;
+      }
+      #push {
+        height: 1.5em;
+      }
+      #footer {
+        height: 1.5em;
+        text-align: center;
       }
 
       #header {
         width: 80%;
-        margin: 10px auto;
-        padding: 20px 0px;
+        margin: 1em auto;
+        padding: 2em;
       }
       .header-item {
         width: 33.33%;
@@ -82,10 +97,10 @@
       }
 
       #container {
-        padding: 10px 0px;
-        margin: 10px auto;
-
+        padding: 1em;
+        margin: 1em;
       }
+
       #nav {
         display: none;
       }
@@ -104,27 +119,69 @@
       #nav:target + #body {
         display: none;
       }
+
+      #about {
+        display: none;
+      }
+      #about:target {
+        display: block;
+      }
+      #contact {
+        display: none;
+      }
+      #contact:target {
+        display: block;
+      }
+
+      #work {
+        display: block;
+      }
+      .work-item {
+        width: 100%;
+        margin: 10px auto;
+      }
+      #work > .work-item:target {
+        display: block;
+      }
+      .work-item:not(:target) {
+        display: none;
+      }
+
+      #work-list {
+        display: none;
+      }
+      #work > .work-item:target ~ #work-list{
+        display: inline;
+      }
+
+
+
     </style>
 
     <!-- Showcase JS - Vanilla.js -->
     <script>
 
-      // Add root server prefex to all anchor links
+      // Add root server prefex to all anchor links (matching #)
       // A bit of a Github Pages hack. Allows for easy movement of index.html
-      // Where ever it ends up, all the anchor links will work
+      // Where ever it ends up, all the anchor links will work. Presents some
+      // issues with external links being overridden
+      // TODO: Fix overriding external links, or hardcode server prefex
       document.addEventListener("DOMContentLoaded", function(event) {
         var l = document.getElementsByTagName("A");
         var b = location.pathname;
         for (var i =0; i<l.length; i++){
-          var t = l[i].href.match(/#.*/)
-          var t = (l[i].href.split("#")[1] || "");
-          l[i].href = b + "#" + t
+          var t = l[i].href.match(/#.*/);
+          if (t) {
+            l[i].href = b + t[0]
+          }
         }
 
         // If we are refreshing the page to /#nav, change the toggle href back to home
         if (location.hash == "#nav") {
           document.getElementById("nav-toggle").hash = "# ";
         }
+
+        manageWork();
       });
 
       // Track hashchanges to update nav toggle href
@@ -132,56 +189,126 @@
         var oldHash = "#" + (event.oldURL.split("#")[1] || "");
         var newHash = "#" + (event.newURL.split("#")[1] || "");
         var toggle = document.getElementById("nav-toggle");
-        if (newHash == "#") {
-          toggle.hash = "#nav";
-        } else {
+
+        if (newHash == "#nav") {
           toggle.hash = oldHash;
-          if (!toggle.hash) {
-            toggle.href += "#";
+          if (toggle.hash == "") {
+            toggle.href = "#";
           }
-       }
+        } else {
+          toggle.hash = "#nav"
+        }
+
+        manageWork();
       });
+
+      // Show all work-item elements if no target is selected (homepage)
+      // Dynamicaly add or remove CSS rule
+      function manageWork() {
+        // If on homepage, show all work
+        hash = location.hash || "#";
+        var r = document.styleSheets[1].cssRules[0].cssText;
+        var showAll = ".work-item { display: block !important; }";
+        if (hash == "#") {
+          if (! showAllWork) {
+            document.styleSheets[1].insertRule(showAll,0);
+            showAllWork = true;
+          }
+        } else {
+          if (showAllWork) {
+            document.styleSheets[1].deleteRule(0);
+            showAllWork = false;
+          }
+        }
+      }
+
+      // Track the presence of work-item css rule
+      var showAllWork = false;
+
     </script>
 </head>
 
     <!-- Content -->
 <body>
-  <div id="header">
-    <div style="visibility: hidden;" class="header-item">
-      &nbsp;
-    </div>
-    <div class="header-item">
-      <a href="/#">
-        <span>Home</span>
-      </a>
-    </div>
-    <div class="header-item">
-      <a id="nav-toggle" href="/#nav">
-        <span>Menu</span>
-      </a>
-    </div>
-  </div>
-  <div id="container">
-    <div id="nav">
-      <div class="nav-item">
-        <a href="/#work">
-          <span>Work</span>
+  <div id="wrap">
+    <div id="header">
+      <div style="visibility: hidden;" class="header-item">
+        &nbsp;
+      </div>
+      <div class="header-item">
+        <a href="/#">
+          <span>Home</span>
         </a>
       </div>
-      <div class="nav-item">
-        <a href="/#about">
+      <div class="header-item">
+        <a id="nav-toggle" href="/#nav">
+          <span>Menu</span>
+        </a>
+      </div>
+    </div>
+    <div id="container">
+      <div id="nav">
+        <div class="nav-item">
+          <a href="/#">
+            <span>Work</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="/#about">
+            <span>About</span>
+          </a>
+        </div>
+        <div class="nav-item">
+          <a href="/#contact">
+            <span>Contact</span>
+          </a>
+        </div>
+      </div>
+      <div id="body">
+        <!-- About -->
+        <div id="about">
           <span>About</span>
-        </a>
-      </div>
-      <div class="nav-item">
-        <a href="/#contact">
+        </div>
+        <!-- Contact -->
+        <div id="contact">
           <span>Contact</span>
-        </a>
+        </div>
+        <!-- Work -->
+        <div id="work">
+          <div id="stargazer" class="work-item">
+            <a href="/#stargazer">
+              <span> Stargazer </span>
+            </a>
+          </div>
+          <div id="firebrand" class="work-item">
+            <a href="/#firebrand">
+              <span> Firebrand </span>
+            </a>
+          </div>
+          <div id="endeavour" class="work-item">
+            <a href="/#endeavour">
+              <span> Endeavour </span>
+            </a>
+          </div>
+
+          <div id="work-list">
+            <a href="/#stargazer">
+              <span> Stargazer </span>
+            </a>
+            <a href="/#firebrand">
+              <span> Firebrand </span>
+            </a>
+            <a href="/#endeavour">
+              <span> Endeavour </span>
+            </a>
+          </div>
+        </div>
       </div>
     </div>
-    <div id="body">
-      <span>Content</span>
-    </div>
+    <div id="push"></div>
+  </div>
+  <div id="footer">
+    <span> website design <a href="https://github.com/ojourmel/showcase"> ojourmel </a></span>
   </div>
 </body>
 </html>
