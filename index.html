@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<!-- Author ojourmel   -->
+<!-- Everything Inline -->
+<html>
+  <head>
+    <title>Showcase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- CSS Reset -->
+    <style>
+      /* http://meyerweb.com/eric/tools/css/reset/
+         v2.0 | 20110126
+         License: none (public domain)
+      */
+      html, body, div, span, applet, object, iframe,
+      h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+      a, abbr, acronym, address, big, cite, code,
+      del, dfn, em, img, ins, kbd, q, s, samp,
+      small, strike, strong, sub, sup, tt, var,
+      b, u, i, center,
+      dl, dt, dd, ol, ul, li,
+      fieldset, form, label, legend,
+      table, caption, tbody, tfoot, thead, tr, th, td,
+      article, aside, canvas, details, embed,
+      figure, figcaption, footer, header, hgroup,
+      menu, nav, output, ruby, section, summary,
+      time, mark, audio, video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article, aside, details, figcaption, figure,
+      footer, header, hgroup, menu, nav, section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol, ul {
+        list-style: none;
+      }
+      blockquote, q {
+        quotes: none;
+      }
+      blockquote:before, blockquote:after,
+      q:before, q:after {
+        content: "";
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+    </style>
+
+    <!-- Showcase CSS -->
+    <!-- Mobile First -->
+    <style>
+
+      /* Disallow very small viewports*/
+      body {
+        min-width:120px;
+      }
+
+      #header {
+        width: 80%;
+        margin: 10px auto;
+        padding: 20px 0px;
+      }
+      .header-item {
+        width: 33.33%;
+        float: left;
+        text-align: center;
+      }
+      #nav-toggle {
+        float: right;
+        margin: 0px 5% 0px 0px;
+      }
+
+      #container {
+        padding: 10px 0px;
+        margin: 10px auto;
+
+      }
+      #nav {
+        display: none;
+      }
+      #nav:target {
+        display: inline;
+      }
+      .nav-item {
+        margin: 1em auto;
+        text-align: center;
+      }
+
+      #body {
+        margin: 10px auto;
+        text-align: center;
+      }
+      #nav:target + #body {
+        display: none;
+      }
+    </style>
+
+    <!-- Showcase JS - Vanilla.js -->
+    <script>
+
+      // Add root server prefex to all anchor links
+      // A bit of a Github Pages hack. Allows for easy movement of index.html
+      // Where ever it ends up, all the anchor links will work
+      document.addEventListener("DOMContentLoaded", function(event) {
+        var l = document.getElementsByTagName("A");
+        var b = location.pathname;
+        for (var i =0; i<l.length; i++){
+          var t = l[i].href.match(/#.*/)
+          var t = (l[i].href.split("#")[1] || "");
+          l[i].href = b + "#" + t
+        }
+
+        // If we are refreshing the page to /#nav, change the toggle href back to home
+        if (location.hash == "#nav") {
+          document.getElementById("nav-toggle").hash = "# ";
+        }
+      });
+
+      // Track hashchanges to update nav toggle href
+      window.addEventListener("hashchange", function(event) {
+        var oldHash = "#" + (event.oldURL.split("#")[1] || "");
+        var newHash = "#" + (event.newURL.split("#")[1] || "");
+        var toggle = document.getElementById("nav-toggle");
+        if (newHash == "#") {
+          toggle.hash = "#nav";
+        } else {
+          toggle.hash = oldHash;
+          if (!toggle.hash) {
+            toggle.href += "#";
+          }
+       }
+      });
+    </script>
+</head>
+
+    <!-- Content -->
+<body>
+  <div id="header">
+    <div style="visibility: hidden;" class="header-item">
+      &nbsp;
+    </div>
+    <div class="header-item">
+      <a href="/#">
+        <span>Home</span>
+      </a>
+    </div>
+    <div class="header-item">
+      <a id="nav-toggle" href="/#nav">
+        <span>Menu</span>
+      </a>
+    </div>
+  </div>
+  <div id="container">
+    <div id="nav">
+      <div class="nav-item">
+        <a href="/#work">
+          <span>Work</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/#about">
+          <span>About</span>
+        </a>
+      </div>
+      <div class="nav-item">
+        <a href="/#contact">
+          <span>Contact</span>
+        </a>
+      </div>
+    </div>
+    <div id="body">
+      <span>Content</span>
+    </div>
+  </div>
+</body>
+</html>
