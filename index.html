@@ -6,6 +6,9 @@
     <title>Showcase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
+    <!-- CDN link for GitHub icon :) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+
     <!-- CSS Reset -->
     <style>
       /* http://meyerweb.com/eric/tools/css/reset/
@@ -55,6 +58,9 @@
         border-collapse: collapse;
         border-spacing: 0;
       }
+      a, a:link, a:visited {
+        color: black;
+      }
     </style>
 
     <!-- Showcase CSS -->
@@ -63,9 +69,8 @@
 
       /* Disallow very small viewports*/
       html,body {
-        min-width:120px;
+        min-width:200px;
         height: 100%;
-        margin: 0;
       }
 
       #wrap {
@@ -77,43 +82,45 @@
         height: 1.5em;
       }
       #footer {
+        width: 80%;
+        margin: 0 auto;
         height: 1.5em;
-        text-align: center;
+        text-align: right;
       }
 
       #header {
         width: 80%;
         margin: 1em auto;
-        padding: 2em;
+        padding-top: 2em;
+        padding-bottom: 2em;
       }
       .header-item {
         width: 33.33%;
         float: left;
         text-align: center;
+        position: relative;
+        z-index: 99;
       }
       #nav-toggle {
         float: right;
-        margin: 0px 5% 0px 0px;
-      }
-
-      #container {
-        padding: 1em;
-        margin: 1em;
+        margin-left: 1em
       }
 
       #nav {
         display: none;
       }
       #nav:target {
-        display: inline;
+        margin: 2em auto;
+        height: 100%;
+        display: block;
       }
       .nav-item {
-        margin: 1em auto;
+        margin: 0em auto 1em;
         text-align: center;
       }
 
       #body {
-        margin: 10px auto;
+        margin: 2em auto;
         text-align: center;
       }
       #nav:target + #body {
@@ -137,8 +144,7 @@
         display: block;
       }
       .work-item {
-        width: 100%;
-        margin: 10px auto;
+        margin: 1em auto;
       }
       #work > .work-item:target {
         display: block;
@@ -154,6 +160,41 @@
         display: inline;
       }
 
+      .text-box-large {
+        width: 80%;
+        line-height: 1.5em;
+        font-size: 2em;
+      }
+
+      /* Screens larger than 768 are treated as non-mobile */
+      @media (min-width: 769px) {
+        #nav-toggle {
+          display: none;
+        }
+        #nav, #nav:target {
+          display: block;
+          width: 80%;
+          margin: -3em auto;
+          text-align: right;
+        }
+        .nav-item {
+          margin: 0 0 0 1em;
+          display: inline-block;
+        }
+        #body {
+          margin-top: 6em;
+        }
+
+        /* TODO: maybe keep this, maybe not.
+           It can make the state in consistent with the url... */
+        #nav:target + #body {
+          display: block;
+        }
+
+        .text-box-large {
+          width: 60%;
+        }
+      }
 
 
     </style>
@@ -180,8 +221,11 @@
         if (location.hash == "#nav") {
           document.getElementById("nav-toggle").hash = "# ";
         }
-
         manageWork();
+
+        // Attribution for anyone who wants to go looking:
+        console.log("Website design and implementation copyright 2016 Oliver Jourmel");
+        console.log("https://github.com/ojourmel/showcase");
       });
 
       // Track hashchanges to update nav toggle href
@@ -206,10 +250,12 @@
       // Dynamicaly add or remove CSS rule
       function manageWork() {
         // If on homepage, show all work
-        hash = location.hash || "#";
+        var hash = location.hash.replace(/%20/g,"") || "#";
+
+        var hash = hash.replace(/%20/g,"");
         var r = document.styleSheets[1].cssRules[0].cssText;
         var showAll = ".work-item { display: block !important; }";
-        if (hash == "#") {
+        if ((hash == "#") || (hash == "#nav")) {
           if (! showAllWork) {
             document.styleSheets[1].insertRule(showAll,0);
             showAllWork = true;
@@ -275,6 +321,9 @@
         </div>
         <!-- Work -->
         <div id="work">
+          <div class="work-item text-box-large">
+            -- a twisted reality can form a pretty shape... once in a while
+          </div>
           <div id="stargazer" class="work-item">
             <a href="/#stargazer">
               <span> Stargazer </span>
@@ -290,6 +339,11 @@
               <span> Endeavour </span>
             </a>
           </div>
+          <div id="gage" class="work-item">
+            <a href="/#gage">
+              <span> Gage </span>
+            </a>
+          </div>
 
           <div id="work-list">
             <a href="/#stargazer">
@@ -301,6 +355,9 @@
             <a href="/#endeavour">
               <span> Endeavour </span>
             </a>
+            <a href="/#gage">
+              <span> Gage </span>
+            </a>
           </div>
         </div>
       </div>
@@ -308,7 +365,9 @@
     <div id="push"></div>
   </div>
   <div id="footer">
-    <span> website design <a href="https://github.com/ojourmel/showcase"> ojourmel </a></span>
+    <a href="https://github.com/ojourmel/showcase">
+      <span class="octicon octicon-mark-github"></span>
+    </a></span>
   </div>
 </body>
 </html>
