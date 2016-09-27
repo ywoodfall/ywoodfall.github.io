@@ -10,7 +10,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
 
     <!-- Overpass font -->
-    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+    <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- Cursive font -->
+    <link href="https://fonts.googleapis.com/css?family=Italianno" rel="stylesheet">
 
     <!-- CSS Reset -->
     <style>
@@ -69,7 +71,7 @@
 
       /* Disallow very small viewports*/
       html,body {
-        min-width:240px;
+        min-width:250px;
         height: 100%;
         font-family: "Overpass", serif;
         font-weight: 500;
@@ -83,33 +85,39 @@
 
       #wrap {
         min-height: 100%;
-        margin-top: -1.5em;
-        margin-bottom: -1.5em;
+        margin-bottom: -2.5em;
       }
-      #push {
-        height: 1.5em;
+      #wrap:after {
+        content: "";
+        display: block;
+        height: 2.5em;
       }
       #footer {
         width: 80%;
         margin: 0 auto;
-        height: 1.5em;
+        height: 2.5em;
         text-align: right;
         opacity: 1;
       }
 
       #header {
         width: 80%;
-        margin: 1em auto;
-        padding-top: 3em;
-        padding-bottom: 2em;
+        margin: 0em auto;
+        padding-top: 1.5em;
+        padding-bottom: 3em;
+        border-bottom: 1px solid #DDDDDD;
       }
       .header-item {
         width: 33.33%;
+        height: 1.5em;
         float: left;
         text-align: center;
         position: relative;
         z-index: 99;
         font-size: 1.5em;
+      }
+      .header-item > a {
+        line-height: 1.5em;
       }
       #nav-toggle {
         float: right;
@@ -144,8 +152,45 @@
       }
       #about:target {
         display: block;
-        text-align: center;
       }
+      .about-banner {
+        display: block;
+        width: 80%;
+        margin: 2em auto;
+        font-size: 2em;
+        font-weight: 600;
+        line-height: 1em;
+        text-align: center;
+        opacity: 1;
+      }
+      .about-image {
+        display: block;
+        width: 90%;
+        position: relative;
+        margin: 2em auto;
+      }
+      .about-image-caption {
+        display: block;
+        width: 90%;
+        position: relative;
+        text-align: left;
+        margin: -1em auto -2em;
+        font-size: 0.8em;
+        opacity: 0.75
+      }
+      .about-text {
+        display: block;
+        width: 80%;
+        margin: -1em auto 3em;
+        opacity: 0.75;
+        font-size: 1.125em;
+        line-height: 1.75em;
+        text-align: left;
+      }
+      .about-text > p {
+        margin-top: 1.5em;
+      }
+
       #contact {
         display: none;
       }
@@ -262,7 +307,7 @@
         opacity: 0.75;
       }
 
-      .work-banner {
+      #work-banner {
         width: 80%;
         line-height: 1.5em;
         font-size: 2em;
@@ -270,15 +315,37 @@
         cursor: default;
       }
 
+
       .active {
         opacity: 1 !important;
+      }
+      .cursive-banner {
+        font-family: 'Italianno', cursive;
+        display: block;
+        width: 80%;
+        margin: 1em auto;
+        font-size: 3em;
+        font-weight: 200;
+        line-height: 1em;
+        text-align: center;
+        opacity: 1;
       }
 
       /* Screens larger than 768 are treated as non-mobile */
       @media (min-width: 769px) {
         #body {
-          margin-top: 6em;
+          margin-top: 5em;
           max-width: 1024px;
+        }
+        #header {
+          padding-top: 3em;
+          padding-bottom: 2em;
+        }
+        .header-item {
+          height: auto;
+        }
+        .header-item > a {
+          line-height: 1em;
         }
         #nav-toggle {
           display: none;
@@ -287,7 +354,7 @@
         #nav, #nav:target {
           display: block;
           width: 80%;
-          margin: -3em auto;
+          margin: -2em auto 0em;
           text-align: right;
         }
         .nav-item {
@@ -308,7 +375,7 @@
         #nav:target + #body {
           display: block;
         }
-        .work-banner {
+        #work-banner {
           width: 60%;
         }
         #work-list > a:hover {
@@ -319,7 +386,8 @@
           width: 80%;
         }
         .work-item:target > .work-item-title {
-          padding-top: 1em;
+          margin-top: 0em;
+          font-size: 3em;
         }
         .work-item:target > .work-item-extra-title {
           width: 60%;
@@ -330,6 +398,14 @@
         }
         .work-item:target > .work-item-extra-text {
           width: 60%;
+        }
+
+        .about-banner {
+          width: 65%;
+        }
+        .about-text {
+          width: 65%;
+          line-height: 2em;
         }
       }
 
@@ -362,7 +438,7 @@
         // Add onclick links for all work-items
         var w = document.getElementsByClassName("work-item");
         for (var i=0; i<w.length; i++){
-          if (w[i].id != "") {
+          if (w[i].id != "work-banner" ) {
             w[i].addEventListener("click", function() {
               location.hash = this.id;
             });
@@ -456,9 +532,6 @@
 
       // Track the presence of work-item css rule
       var showAllWork = false;
-
-      // If refreshing a work item, be sure to scroll to top
-      window.onload = function() {window.scrollTo(0,0)};
     </script>
 </head>
 
@@ -471,11 +544,13 @@
       </div>
       <div class="header-item">
         <a href="/#">
-          Home
+          Showcase
         </a>
       </div>
       <div class="header-item">
-        <a id="nav-toggle" href="/#nav">Menu</a>
+        <a id="nav-toggle" href="/#nav">
+          <span class="mega-octicon octicon-three-bars"></span>
+        </a>
       </div>
     </div>
     <div id="container">
@@ -493,21 +568,53 @@
       <div id="body">
 
         <!-- About -->
-        <div id="about">About</div>
+        <div id="about">
+          <div class="about-banner">
+            A personal mission statement. Something that holds true to the essence of you.
+          </div>
+          <img class="about-image" src="http://i.imgur.com/LXAXVPH.jpg">
+          <div class="about-image-caption">attribution</div>
+          <div class="cursive-banner">
+            Valerie Page
+          </div>
+          <div class="about-text">
+              Introductory paragraph that explains a bit about who you
+              are, and what you are all about. Perhaps some details about
+              your background, education, and work experience. This can help
+              build your credibility. Additionally, perhaps some details
+              on recent work or life experiences.
+          </div>
+
+          <div class="about-text">
+              More details on a particularly interesting project, hobby,
+              or work experience. Show how your methodology in this specific
+              example worked to produce a positive outcome, and how the
+              generalization of that methodology will work in other scenarios.
+          </div>
+
+          <div class="about-text">
+              Drive home your core principals and attributes. What is the
+              essential you. End with something operational or upbeat.
+          </div>
+
+          <img class="about-image" src="http://i.imgur.com/Xf5OcDy.jpg">
+          <div class="about-image-caption">source or comment</div>
+
+        </div>
 
         <!-- Contact -->
         <div id="contact">Contact</div>
 
         <!-- Work -->
         <div id="work">
-          <div class="work-item work-banner">
-            -- a twisted reality can form a pretty shape... once in a while
+          <div id="work-banner" class="work-item">
+            -- a simple summation of your work, life, and hobbies.
           </div>
 
           <div id="stargazer" class="work-item">
             <div class="work-item-title"> Stargazer </div>
             <div class="work-item-text">
-              A full summary could be found here. Covering both the high level relevance,
+              A full summary should be found here. Covering both the high level relevance,
               as well as perhaps some interesting anecdotes of the work.
             </div>
             <img class="work-item-image" src="http://i.imgur.com/4g078qp.jpg">
@@ -516,12 +623,13 @@
           <div id="firebrand" class="work-item">
             <div class="work-item-title"> Firebrand </div>
             <div class="work-item-text">
-              A full summary could be found here. Covering both the high level relevance,
-              as well as perhaps some interesting anecdotes of the work.
+              Longer works may require more in depth explanation. More details can
+              follow additional images.
             </div>
             <img class="work-item-image" src="http://i.imgur.com/sT9VAyO.jpg">
             <div class="work-item-extra-text">
-              More information that I thought was worth while to talk about. Almost a blog post or sorts.
+              A continuation of the summary found about, perhaps pointing out something interesting
+              in the previous image.
             </div>
             <div class="work-item-extra-title">
               Perhaps just a witty quote.
@@ -532,8 +640,7 @@
           <div id="endeavour" class="work-item">
             <div class="work-item-title"> Endeavour </div>
             <div class="work-item-text">
-              A full summary could be found here. Covering both the high level relevance,
-              as well as perhaps some interesting anecdotes of the work.
+              Short pieces of work may be self explanatory.
             </div>
             <img class="work-item-image" src="http://i.imgur.com/4MMa1lx.jpg">
           </div>
@@ -541,8 +648,8 @@
           <div id="gage" class="work-item">
             <div class="work-item-title"> Gage </div>
             <div class="work-item-text">
-              A full summary could be found here. Covering both the high level relevance,
-              as well as perhaps some interesting anecdotes of the work.
+              Keep the details short and relevant. But expand on why this piece is representative
+              of your value and worth.
             </div>
             <img class="work-item-image" src="http://i.imgur.com/NauQkpU.jpg">
           </div>
@@ -557,12 +664,11 @@
         </div>
       </div>
     </div>
-    <div id="push"></div>
   </div>
   <div id="footer">
     <a href="https://github.com/ojourmel/showcase">
       <span class="octicon octicon-mark-github"></span>
-    </a></span>
+    </a>
   </div>
 </body>
 </html>
