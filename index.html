@@ -9,6 +9,9 @@
     <!-- CDN link for GitHub icon :) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
 
+    <!-- Overpass font -->
+    <link rel="stylesheet" href="http://overpass-30e2.kxcdn.com/overpass.css" />
+
     <!-- CSS Reset -->
     <style>
       /* http://meyerweb.com/eric/tools/css/reset/
@@ -58,9 +61,6 @@
         border-collapse: collapse;
         border-spacing: 0;
       }
-      a, a:link, a:visited {
-        color: black;
-      }
     </style>
 
     <!-- Showcase CSS -->
@@ -69,8 +69,16 @@
 
       /* Disallow very small viewports*/
       html,body {
-        min-width:200px;
+        min-width:240px;
         height: 100%;
+        font-family: "Overpass", serif;
+        font-weight: 500;
+        background-color: #F9F9F9;
+      }
+
+      a, a:link, a:visited {
+        text-decoration: none;
+        color: black;
       }
 
       #wrap {
@@ -86,12 +94,13 @@
         margin: 0 auto;
         height: 1.5em;
         text-align: right;
+        opacity: 1;
       }
 
       #header {
         width: 80%;
         margin: 1em auto;
-        padding-top: 2em;
+        padding-top: 3em;
         padding-bottom: 2em;
       }
       .header-item {
@@ -100,6 +109,7 @@
         text-align: center;
         position: relative;
         z-index: 99;
+        font-size: 1.5em;
       }
       #nav-toggle {
         float: right;
@@ -110,18 +120,20 @@
         display: none;
       }
       #nav:target {
-        margin: 2em auto;
-        height: 100%;
+        height: 80%;
+        margin: auto;
+        margin-top: 5em;
         display: block;
       }
       .nav-item {
         margin: 0em auto 1em;
         text-align: center;
+        font-weight: 600;
+        font-size: 1.5em;
       }
 
       #body {
         margin: 2em auto;
-        text-align: center;
       }
       #nav:target + #body {
         display: none;
@@ -132,20 +144,16 @@
       }
       #about:target {
         display: block;
+        text-align: center;
       }
       #contact {
         display: none;
       }
       #contact:target {
         display: block;
+        text-align: center;
       }
 
-      #work {
-        display: block;
-      }
-      .work-item {
-        margin: 1em auto;
-      }
       #work > .work-item:target {
         display: block;
       }
@@ -155,22 +163,127 @@
 
       #work-list {
         display: none;
+        width: 60%;
+        margin: 1em auto;
+        text-align: center;
+      }
+      #work-list > a{
+        opacity: 0.55;
+        margin: 0 0 0 1em;
+        font-size: 0.75em;
       }
       #work > .work-item:target ~ #work-list{
-        display: inline;
+        display: block;
       }
 
-      .text-box-large {
+      /* work page content */
+      .work-item {
+        margin: 1em auto;
+        text-align: center;
+        width: 90%;
+        position: relative;
+        overflow: hidden;
+        cursor: pointer;
+      }
+      .work-item-title {
+        position: absolute;
+        top: calc(50% - 0.5em);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto;
+        opacity: 0;
+        font-size: 2em;
+        transition: opacity 0.25s linear;
+      }
+      .work-item:hover > .work-item-title{
+        opacity: 0.75;
+        transition: opacity 0.25s linear;
+      }
+      .work-item-image {
+        max-width: 100%;
+        margin: auto;
+        opacity: 1;
+        transition: opacity 0.25s linear;
+      }
+      .work-item:hover > .work-item-image{
+        opacity: 0.5;
+        transition: opacity 0.25s linear;
+      }
+      .work-item-text, .work-item-extra-text, .work-item-extra-image, .work-item-extra-title {
+        display: none;
+      }
+
+      .work-item:target {
+        padding-bottom: 0;
+        cursor: default
+      }
+      .work-item:target * {
+        opacity: 1;
+      }
+      .work-item:target:hover * {
+        opacity: 1;
+      }
+      .work-item:target > .work-item-title {
+        position: relative;
+        margin: 1em auto;
+        font-size: 2em;
+        font-weight: 800;
+      }
+      .work-item:target > .work-item-image {
+        display: block;
+        width: 100%;
+        position: relative;
+        margin: 2em auto;
+      }
+      .work-item:target > .work-item-text {
+        display: block;
+        width: 80%;
+        margin: 2em auto;
+        opacity: 0.75;
+      }
+      .work-item:target > .work-item-extra-title {
+        display: block;
+        width: 80%;
+        margin: 1em auto;
+        font-size: 2em;
+        font-weight: 800;
+      }
+      .work-item:target > .work-item-extra-image {
+        display: block;
+        width: 100%;
+        position: relative;
+        margin: 2em auto;
+      }
+      .work-item:target > .work-item-extra-text {
+        display: block;
+        width: 60%;
+        margin: 2em auto;
+        opacity: 0.75;
+      }
+
+      .work-banner {
         width: 80%;
         line-height: 1.5em;
         font-size: 2em;
+        padding: 0;
+        cursor: default;
+      }
+
+      .active {
+        opacity: 1 !important;
       }
 
       /* Screens larger than 768 are treated as non-mobile */
       @media (min-width: 769px) {
+        #body {
+          margin-top: 6em;
+          max-width: 1024px;
+        }
         #nav-toggle {
           display: none;
         }
+
         #nav, #nav:target {
           display: block;
           width: 80%;
@@ -180,9 +293,14 @@
         .nav-item {
           margin: 0 0 0 1em;
           display: inline-block;
+          font-weight: 400;
+          font-size: 1em;
         }
-        #body {
-          margin-top: 6em;
+        .nav-item > a {
+          opacity: 0.5;
+        }
+        .nav-item:hover > a {
+          opacity: 1;
         }
 
         /* TODO: maybe keep this, maybe not.
@@ -190,12 +308,30 @@
         #nav:target + #body {
           display: block;
         }
+        .work-banner {
+          width: 60%;
+        }
+        #work-list > a:hover {
+          opacity: 1;
+        }
 
-        .text-box-large {
+        .work-item {
+          width: 80%;
+        }
+        .work-item:target > .work-item-title {
+          padding-top: 1em;
+        }
+        .work-item:target > .work-item-extra-title {
+          width: 60%;
+          margin: 2em auto;
+        }
+        .work-item:target > .work-item-text {
+          width: 60%;
+        }
+        .work-item:target > .work-item-extra-text {
           width: 60%;
         }
       }
-
 
     </style>
 
@@ -208,9 +344,10 @@
       // issues with external links being overridden
       // TODO: Fix overriding external links, or hardcode server prefex
       document.addEventListener("DOMContentLoaded", function(event) {
-        var l = document.getElementsByTagName("A");
+
+        var l = document.getElementsByTagName("a");
         var b = location.pathname;
-        for (var i =0; i<l.length; i++){
+        for (var i=0; i<l.length; i++){
           var t = l[i].href.match(/#.*/);
           if (t) {
             l[i].href = b + t[0]
@@ -221,7 +358,20 @@
         if (location.hash == "#nav") {
           document.getElementById("nav-toggle").hash = "# ";
         }
+
+        // Add onclick links for all work-items
+        var w = document.getElementsByClassName("work-item");
+        for (var i=0; i<w.length; i++){
+          if (w[i].id != "") {
+            w[i].addEventListener("click", function() {
+              location.hash = this.id;
+            });
+          }
+        }
+
+        // Set up landing page work
         manageWork();
+        activeNav();
 
         // Attribution for anyone who wants to go looking:
         console.log("Website design and implementation copyright 2016 Oliver Jourmel");
@@ -230,6 +380,8 @@
 
       // Track hashchanges to update nav toggle href
       window.addEventListener("hashchange", function(event) {
+        window.scrollTo(0,0);
+
         var oldHash = "#" + (event.oldURL.split("#")[1] || "");
         var newHash = "#" + (event.newURL.split("#")[1] || "");
         var toggle = document.getElementById("nav-toggle");
@@ -243,7 +395,10 @@
           toggle.hash = "#nav"
         }
 
+
         manageWork();
+        activeNav();
+        activeWorkList();
       });
 
       // Show all work-item elements if no target is selected (homepage)
@@ -253,17 +408,48 @@
         var hash = location.hash.replace(/%20/g,"") || "#";
 
         var hash = hash.replace(/%20/g,"");
-        var r = document.styleSheets[1].cssRules[0].cssText;
+        var ss = document.styleSheets[document.styleSheets.length-1];
+        var r = ss.cssRules[0].cssText;
         var showAll = ".work-item { display: block !important; }";
         if ((hash == "#") || (hash == "#nav")) {
           if (! showAllWork) {
-            document.styleSheets[1].insertRule(showAll,0);
+            ss.insertRule(showAll,0);
             showAllWork = true;
           }
         } else {
           if (showAllWork) {
-            document.styleSheets[1].deleteRule(0);
+            ss.deleteRule(0);
             showAllWork = false;
+          }
+        }
+      }
+
+      // Indicate which nav item is currently targeted
+      function activeNav() {
+        var hash = location.hash.replace(/%20/g,"");
+        var ni = document.getElementById("nav").querySelectorAll("a");
+        for (var i=0; i<ni.length; i++){
+          if (hash == ni[i].hash) {
+            if (! ni[i].className.match("active") ) {
+              ni[i].className += " active";
+            }
+          } else {
+            ni[i].className = ni[i].className.replace("active", "");
+          }
+        }
+      }
+
+      // Indicate which work list item is currently targeted
+      function activeWorkList() {
+        var hash = location.hash.replace(/%20/g,"");
+        var ni = document.getElementById("work-list").querySelectorAll("a");
+        for (var i=0; i<ni.length; i++){
+          if (hash == ni[i].hash) {
+            if (! ni[i].className.match("active") ) {
+              ni[i].className += " active";
+            }
+          } else {
+            ni[i].className = ni[i].className.replace("active", "");
           }
         }
       }
@@ -271,6 +457,8 @@
       // Track the presence of work-item css rule
       var showAllWork = false;
 
+      // If refreshing a work item, be sure to scroll to top
+      window.onload = function() {window.scrollTo(0,0)};
     </script>
 </head>
 
@@ -283,81 +471,88 @@
       </div>
       <div class="header-item">
         <a href="/#">
-          <span>Home</span>
+          Home
         </a>
       </div>
       <div class="header-item">
-        <a id="nav-toggle" href="/#nav">
-          <span>Menu</span>
-        </a>
+        <a id="nav-toggle" href="/#nav">Menu</a>
       </div>
     </div>
     <div id="container">
       <div id="nav">
         <div class="nav-item">
-          <a href="/#">
-            <span>Work</span>
-          </a>
+          <a href="/#">Work</a>
         </div>
         <div class="nav-item">
-          <a href="/#about">
-            <span>About</span>
-          </a>
+          <a href="/#about">About</a>
         </div>
         <div class="nav-item">
-          <a href="/#contact">
-            <span>Contact</span>
-          </a>
+          <a href="/#contact">Contact</a>
         </div>
       </div>
       <div id="body">
+
         <!-- About -->
-        <div id="about">
-          <span>About</span>
-        </div>
+        <div id="about">About</div>
+
         <!-- Contact -->
-        <div id="contact">
-          <span>Contact</span>
-        </div>
+        <div id="contact">Contact</div>
+
         <!-- Work -->
         <div id="work">
-          <div class="work-item text-box-large">
+          <div class="work-item work-banner">
             -- a twisted reality can form a pretty shape... once in a while
           </div>
+
           <div id="stargazer" class="work-item">
-            <a href="/#stargazer">
-              <span> Stargazer </span>
-            </a>
+            <div class="work-item-title"> Stargazer </div>
+            <div class="work-item-text">
+              A full summary could be found here. Covering both the high level relevance,
+              as well as perhaps some interesting anecdotes of the work.
+            </div>
+            <img class="work-item-image" src="http://i.imgur.com/4g078qp.jpg">
           </div>
+
           <div id="firebrand" class="work-item">
-            <a href="/#firebrand">
-              <span> Firebrand </span>
-            </a>
+            <div class="work-item-title"> Firebrand </div>
+            <div class="work-item-text">
+              A full summary could be found here. Covering both the high level relevance,
+              as well as perhaps some interesting anecdotes of the work.
+            </div>
+            <img class="work-item-image" src="http://i.imgur.com/sT9VAyO.jpg">
+            <div class="work-item-extra-text">
+              More information that I thought was worth while to talk about. Almost a blog post or sorts.
+            </div>
+            <div class="work-item-extra-title">
+              Perhaps just a witty quote.
+            </div>
+            <img class="work-item-extra-image" src="http://wantedwallpapers.com/wp-content/uploads/2014/02/red-fire-abstract-pattern-desktop-1280x1024-wanted-wallpaper-.jpg">
           </div>
+
           <div id="endeavour" class="work-item">
-            <a href="/#endeavour">
-              <span> Endeavour </span>
-            </a>
+            <div class="work-item-title"> Endeavour </div>
+            <div class="work-item-text">
+              A full summary could be found here. Covering both the high level relevance,
+              as well as perhaps some interesting anecdotes of the work.
+            </div>
+            <img class="work-item-image" src="http://i.imgur.com/4MMa1lx.jpg">
           </div>
+
           <div id="gage" class="work-item">
-            <a href="/#gage">
-              <span> Gage </span>
-            </a>
+            <div class="work-item-title"> Gage </div>
+            <div class="work-item-text">
+              A full summary could be found here. Covering both the high level relevance,
+              as well as perhaps some interesting anecdotes of the work.
+            </div>
+            <img class="work-item-image" src="http://i.imgur.com/NauQkpU.jpg">
           </div>
 
           <div id="work-list">
-            <a href="/#stargazer">
-              <span> Stargazer </span>
-            </a>
-            <a href="/#firebrand">
-              <span> Firebrand </span>
-            </a>
-            <a href="/#endeavour">
-              <span> Endeavour </span>
-            </a>
-            <a href="/#gage">
-              <span> Gage </span>
-            </a>
+            <a href="/#">All</a>
+            <a href="/#stargazer">Stargazer</a>
+            <a href="/#firebrand">Firebrand</a>
+            <a href="/#endeavour">Endeavour</a>
+            <a href="/#gage">Gage</a>
           </div>
         </div>
       </div>
