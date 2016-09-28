@@ -6,11 +6,12 @@
     <title>Showcase</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CDN link for GitHub icon :) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <!-- Github, hamburger and social media icons -->
+    <!-- Thanks to http://ionicons.com/ -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css"/>
 
-    <!-- Overpass font -->
-    <link rel="stylesheet" href="https://overpass-30e2.kxcdn.com/overpass.css" />
+    <!-- Crimson Text -->
+    <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <!-- Cursive font -->
     <link href="https://fonts.googleapis.com/css?family=Italianno" rel="stylesheet">
 
@@ -74,13 +75,16 @@
         min-width:250px;
         height: 100%;
         font-family: "Overpass", serif;
-        font-weight: 500;
+        font-family: 'Crimson Text', serif;
+        font-weight: 400;
         background-color: #F9F9F9;
+        cursor: default;
       }
 
       a, a:link, a:visited {
         text-decoration: none;
         color: black;
+        cursor: pointer;
       }
 
       #wrap {
@@ -136,7 +140,6 @@
       .nav-item {
         margin: 0em auto 1em;
         text-align: center;
-        font-weight: 600;
         font-size: 1.5em;
       }
 
@@ -158,7 +161,6 @@
         width: 80%;
         margin: 2em auto;
         font-size: 2em;
-        font-weight: 600;
         line-height: 1em;
         text-align: center;
         opacity: 1;
@@ -187,8 +189,8 @@
         line-height: 1.75em;
         text-align: left;
       }
-      .about-text > p {
-        margin-top: 1.5em;
+      .about-text + .about-text {
+        margin-top: -2em;
       }
 
       #contact {
@@ -196,7 +198,87 @@
       }
       #contact:target {
         display: block;
+      }
+      .contact-banner {
+        display: block;
+        width: 80%;
+        margin: 2em auto;
         text-align: center;
+        font-size: 2em;
+        line-height: 1em;
+        opacity: 1;
+      }
+      .contact-text {
+        display: block;
+        width: 80%;
+        margin: 1em auto;
+        opacity: 0.75;
+        font-size: 1.125em;
+        text-align: center;
+        line-height: 1.75em;
+      }
+      .contact-links {
+        display: block;
+        width: 80%;
+        margin: auto;
+        text-align: center;
+      }
+      .contact-link-item {
+        display: inline-block;
+        margin: 1em;
+        width: 3em;
+      }
+      .contact-link-item > a {
+        display: block;
+        margin: auto;
+        font-size: 2.5em;
+        text-align: center;
+        border-radius: .125em;
+      }
+      .contact-link-item > a > i {
+        text-align: center;
+      }
+      .contact-link-item:hover > a {
+        background-color: #222222;
+      }
+      .contact-link-item:hover > a > i {
+        color: #F9F9F9;
+      }
+
+      #email {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        width: 100%;
+        height: 100%;
+        text-align: center;
+        top: 0;
+        left: 0;
+        background: black;
+        background: rgba(0,0,0,0.8);
+      }
+      #email:target {
+        display: block;
+        outline: none;
+      }
+      #email:target > #email-text {
+        display: block;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        font-size: 1.25em;
+        margin: auto;
+        padding: 2em;
+        background: #F9F9F9;
+        border-radius: 1em;
+      }
+      #email:target > #email-text > a {
+        unicode-bidi:bidi-override;
+        direction:rtl;
+        text-decoration: underline;
+        color: #6699ff;
       }
 
       #work > .work-item:target {
@@ -273,7 +355,7 @@
         position: relative;
         margin: 1em auto;
         font-size: 2em;
-        font-weight: 800;
+        font-weight: 500;
       }
       .work-item:target > .work-item-image {
         display: block;
@@ -292,7 +374,7 @@
         width: 80%;
         margin: 1em auto;
         font-size: 2em;
-        font-weight: 800;
+        font-weight: 500;
       }
       .work-item:target > .work-item-extra-image {
         display: block;
@@ -319,6 +401,9 @@
       .active {
         opacity: 1 !important;
       }
+      .hidden {
+        visibility: hidden;
+      }
       .cursive-banner {
         font-family: 'Italianno', cursive;
         display: block;
@@ -329,6 +414,14 @@
         line-height: 1em;
         text-align: center;
         opacity: 1;
+      }
+
+      .icon {
+        color: #222222;
+      }
+      .icon:before {
+        vertical-align: -2px;
+        padding: 0px 1px;
       }
 
       /* Screens larger than 768 are treated as non-mobile */
@@ -445,12 +538,16 @@
           }
         }
 
+        // Deal with email handlers
+        document.getElementById("email-link").addEventListener("click", showEmail);
+        document.getElementById("email").addEventListener("click", hideEmail);
+
         // Set up landing page work
         manageWork();
         activeNav();
 
         // Attribution for anyone who wants to go looking:
-        console.log("Website design and implementation copyright 2016 Oliver Jourmel");
+        console.log("Website design and implementation Copyright 2016 Oliver Jourmel");
         console.log("https://github.com/ojourmel/showcase");
       });
 
@@ -485,7 +582,7 @@
 
         var hash = hash.replace(/%20/g,"");
         var ss = document.styleSheets[document.styleSheets.length-1];
-        var r = ss.cssRules[0].cssText;
+        var r = ss.cssRules[ss.cssRules.length-1].cssText;
         var showAll = ".work-item { display: block !important; }";
         if ((hash == "#") || (hash == "#nav")) {
           if (! showAllWork) {
@@ -530,6 +627,42 @@
         }
       }
 
+      // A (relatively) bad attempt to hide the email address from web bots.
+      // This is *not* guaranteed to work. It even uses a crap string reverser!
+      function showEmail(event) {
+        var r = function(s) {
+          return s.split("").reverse().join("");
+        }
+
+        // To display: test@example.com
+
+        // Fill e1, e2, etc with the first part of your email, (text)
+        // in two character chunks, with characters backwards (et first, then ts).
+        // Next, fill in d1, d2, d3, etc using the same pattern.
+        // Finally, fill in x with the full top level domain, (com), backwards.
+        var e1 = "et";
+        var e2 = "ts";
+        var d1 = "xe";
+        var d2 = "ma";
+        var d3 = "lp";
+        var d4 = "e";
+
+        var x = "moc";
+
+        // Add each part together in reverse order, with the "." and "@" put in the correct place.
+        var addr = x + "." + d4 + d3 + d2 + d1 + "@" + e2 + e1;
+
+        var t = document.getElementById("email-text");
+        t.innerHTML = "Feel free to hit me up by email: <a href='mailto:" + r(addr) + "'>"+addr+"</a>"
+      }
+
+      function hideEmail(event) {
+        if (event.target == document.getElementById("email")) {
+          document.getElementById("email-text").innerHTML = "";
+          window.history.back();
+        }
+      }
+
       // Track the presence of work-item css rule
       var showAllWork = false;
     </script>
@@ -549,7 +682,7 @@
       </div>
       <div class="header-item">
         <a id="nav-toggle" href="/#nav">
-          <span class="mega-octicon octicon-three-bars"></span>
+          <i class="icon ion-navicon-round"></i>
         </a>
       </div>
     </div>
@@ -572,7 +705,7 @@
           <div class="about-banner">
             A personal mission statement. Something that holds true to the essence of you.
           </div>
-          <img class="about-image" src="http://i.imgur.com/LXAXVPH.jpg">
+          <img class="about-image" src="https://i.imgur.com/LXAXVPH.jpg">
           <div class="about-image-caption">attribution</div>
           <div class="cursive-banner">
             Valerie Page
@@ -597,13 +730,41 @@
               essential you. End with something operational or upbeat.
           </div>
 
-          <img class="about-image" src="http://i.imgur.com/Xf5OcDy.jpg">
+          <img class="about-image" src="https://i.imgur.com/Xf5OcDy.jpg">
           <div class="about-image-caption">source or comment</div>
 
         </div>
 
         <!-- Contact -->
-        <div id="contact">Contact</div>
+        <div id="contact">
+          <div class="contact-banner">
+            Motivational encouragement of commitment!
+          </div>
+          <div class="contact-links">
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-twitter"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-googleplus"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-instagram"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-whatsapp"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-snapchat"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-pinterest"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-reddit"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-linkedin"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-tumblr"></i></a> </div>
+            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-facebook"></i></a> </div>
+            <div class="contact-link-item"> <a id="email-link" href="/#email"><i class="icon ion-ios-email"></i></a> </div>
+          </div>
+          <div class="contact-text">
+            Additional text to provide context to the flurry of social media links just provided. Perhaps an
+            explanation of the email link.
+          </div>
+        </div>
+
+        <!-- Email -->
+        <div id="email">
+          <div class="hidden">Back</div>
+          <div id="email-text">
+          </div>
+        </div>
 
         <!-- Work -->
         <div id="work">
@@ -617,7 +778,7 @@
               A full summary should be found here. Covering both the high level relevance,
               as well as perhaps some interesting anecdotes of the work.
             </div>
-            <img class="work-item-image" src="http://i.imgur.com/4g078qp.jpg">
+            <img class="work-item-image" src="https://i.imgur.com/4g078qp.jpg">
           </div>
 
           <div id="firebrand" class="work-item">
@@ -626,7 +787,7 @@
               Longer works may require more in depth explanation. More details can
               follow additional images.
             </div>
-            <img class="work-item-image" src="http://i.imgur.com/sT9VAyO.jpg">
+            <img class="work-item-image" src="https://i.imgur.com/sT9VAyO.jpg">
             <div class="work-item-extra-text">
               A continuation of the summary found about, perhaps pointing out something interesting
               in the previous image.
@@ -634,7 +795,7 @@
             <div class="work-item-extra-title">
               Perhaps just a witty quote.
             </div>
-            <img class="work-item-extra-image" src="http://wantedwallpapers.com/wp-content/uploads/2014/02/red-fire-abstract-pattern-desktop-1280x1024-wanted-wallpaper-.jpg">
+            <img class="work-item-extra-image" src="https://i.imgur.com/6oiiSrf.jpg">
           </div>
 
           <div id="endeavour" class="work-item">
@@ -642,7 +803,7 @@
             <div class="work-item-text">
               Short pieces of work may be self explanatory.
             </div>
-            <img class="work-item-image" src="http://i.imgur.com/4MMa1lx.jpg">
+            <img class="work-item-image" src="https://i.imgur.com/4MMa1lx.jpg">
           </div>
 
           <div id="gage" class="work-item">
@@ -651,7 +812,7 @@
               Keep the details short and relevant. But expand on why this piece is representative
               of your value and worth.
             </div>
-            <img class="work-item-image" src="http://i.imgur.com/NauQkpU.jpg">
+            <img class="work-item-image" src="https://i.imgur.com/NauQkpU.jpg">
           </div>
 
           <div id="work-list">
@@ -667,7 +828,7 @@
   </div>
   <div id="footer">
     <a href="https://github.com/ojourmel/showcase">
-      <span class="octicon octicon-mark-github"></span>
+      <i class="icon ion-social-github"></i>
     </a>
   </div>
 </body>
