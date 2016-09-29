@@ -116,25 +116,47 @@
       }
       #header {
         padding-top: 1.5em;
-        padding-bottom: 3em;
+        padding-bottom: 0.75em;
         border-bottom: 1px solid #DDDDDD;
       }
 
       .header-item {
-        width: 33.33%;
+        display: block;
+        margin: auto;
         height: 1.5em;
-        float: left;
         text-align: center;
-        position: relative;
-        z-index: 99;
         font-size: 1.5em;
         line-height: 1.5em;
       }
+
       #nav-toggle {
-        float: right;
-        margin-left: 1em
+        line-height: 1.5;
+        display: block;
+        width: 80%;
+        margin: -4em auto 0em;
+        height: 4em;
+        text-align: right;
+        font-size: 1.5em;
       }
 
+      #nav-open {
+        margin: 1.95em 0 0 -1em;
+        display: inline-block;
+        font-size: 1em;
+      }
+      #nav:target + #nav-toggle > #nav-close {
+        margin: 0.64em 0 0 0em;
+        display: inline-block;
+        font-size: 1em;
+      }
+      #nav:target + #nav-toggle {
+        display: block;
+        width: 80%;
+        margin: -12em auto 0em;
+      }
+      #nav-close, #nav:target + #nav-toggle > #nav-open {
+        display: none;
+      }
       #nav:target {
         display: block;
         width: 80%;
@@ -258,6 +280,9 @@
         text-decoration: underline;
         color: #6699ff;
       }
+      #robots {
+        font-family: monospace;
+      }
 
       .work-item:target {
         display: block;
@@ -302,7 +327,7 @@
         font-size: 2em;
         opacity: 0;
       }
-      .work-item:hover > .work-item-title:first-of-type {
+      .work-item:hover > a > .work-item-title:first-of-type {
         opacity: 0.75;
       }
       .work-item-image:first-of-type {
@@ -310,7 +335,7 @@
         max-width: 90%;
         opacity: 1;
       }
-      .work-item:hover > .work-item-image:first-of-type {
+      .work-item:hover > a > .work-item-image:first-of-type {
         opacity: 0.5;
       }
       .work-item-title:first-of-type, .work-item-image:first-of-type {
@@ -324,17 +349,17 @@
       .work-item:target {
         cursor: default
       }
-      .work-item:target > .work-item-title, .work-item:target:hover > .work-item-title, .work-item:target:hover > .work-item-image {
+      .work-item:target > a > .work-item-title, .work-item:target:hover > a > .work-item-title, .work-item:target:hover > a > .work-item-image {
         opacity: 1;
       }
-      .work-item:target > .work-item-title {
+      .work-item:target > a > .work-item-title {
         display: block;
         width: 80%;
         position: relative;
         margin: 1em auto;
         font-size: 2em;
       }
-      .work-item:target > .work-item-image, .work-item:target > .work-item-text {
+      .work-item:target > a > .work-item-image, .work-item:target > a > .work-item-text {
         display: block;
       }
 
@@ -358,6 +383,10 @@
         display: block;
       }
 
+      .noscript, .nohash {
+        display: none;
+      }
+
       /* Screens larger than 768 are treated as non-mobile */
       @media (min-width: 768px) {
         #nav-toggle {
@@ -365,7 +394,7 @@
         }
         #header {
           padding-top: 3em;
-          padding-bottom: 2em;
+          padding-bottom: 0.5em;
         }
         .header-item {
           height: auto;
@@ -376,11 +405,12 @@
           line-height: 1.5;
           display: block;
           width: 80%;
-          margin: -2em auto 0em;
+          margin: -4em auto 0em;
+          height: 4em;
           text-align: right;
         }
         .nav-item {
-          margin: 0 0 0 1em;
+          margin: 2em 0 0 1em;
           display: inline-block;
           font-size: 1em;
         }
@@ -400,13 +430,13 @@
           display: block;
         }
 
-        .work-item:target > .work-item-title, .work-item-text, .about-text, .contact-text, .about-banner, .contact-banner, .cursive-banner, #work-banner, .contact-links {
+        .work-item:target > a > .work-item-title, .work-item-text, .about-text, .contact-text, .about-banner, .contact-banner, .cursive-banner, #work-banner, .contact-links {
           width: 65% !important;
         }
         .about-text {
           line-height: 2em;
         }
-        .work-item:target > .work-item-title {
+        .work-item:target > a > .work-item-title {
           font-size: 3em;
         }
         .work-item-text {
@@ -417,6 +447,51 @@
         }
       }
     </style>
+
+    <!-- Styles incase JavaScript is disabled -->
+    <noscript>
+      <style>
+        .noscript {
+          display: block;
+          width: 80%;
+          margin: 1em auto -1em;
+          color: #330000;
+          text-align: center;
+          font-size: 2em;
+          line-height: 1.5em;
+
+          color: #A94442;
+          background-color: #F2DEDE;
+          border-radius: 0.25em;
+          border-style: solid;
+          border-width: 2px;
+          border-color: #A94442;
+        }
+        #about:target ~ .noscript, #contact:target ~ .noscript, #email:target ~ .noscript, #nav:target ~ #body > .noscript {
+          display: none;
+        }
+        .nohash {
+          display:block;
+          margin: 2em auto;
+          text-align: center;
+          font-size: 2em;
+          line-height: 1.5em;
+          text-decoration: underline !important;
+          color: #6699ff !important;
+        }
+        #work:target > .nohash, :target ~ .nohash, :target ~ #work > .nohash {
+          display: none;
+        }
+        #email-text > a {
+          unicode-bidi:bidi-override;
+          direction:ltr;
+        }
+        @media (min-width: 768px) {
+          .noscript {
+          }
+        }
+      </style>
+    </noscript>
 
     <!-- Showcase JS - Vanilla.js -->
     <script>
@@ -433,14 +508,11 @@
         }
       });
 
-      // Because IE doesn't recalculate css on history.back...
-      if (!!window.navigator.userAgent.match(/MSIE|Trident/)) {
-        window.addEventListener("hashchange", function(event) {
-          document.getElementById("ie-refresh").className = "z";
-          document.getElementById("ie-refresh").className = "";
-        });
-      }
-
+      // Because browsers don't always recalculate css on history.back...
+      window.addEventListener("hashchange", function(event) {
+        document.getElementById("ie-refresh").className = "z";
+        document.getElementById("ie-refresh").className = "";
+      });
 
       // Add root server prefix to all anchor links (matching #)
       // A bit of a Github Pages hack. Allows for easy movement of index.html
@@ -454,23 +526,6 @@
           var t = l[i].href.match(/#.*/);
           if (t) {
             l[i].href = b + t[0]
-          }
-        }
-
-        // If we are refreshing the page to /#nav, change the toggle href back to home
-        if (location.hash == "#nav") {
-          document.getElementById("nav-toggle").hash = "#work ";
-        }
-
-        // Add onclick links for all work-items (except for the banner)
-        var w = document.getElementsByClassName("work-item");
-        for (var i=0; i<w.length; i++){
-          if (w[i].id != "work-banner" ) {
-            w[i].addEventListener("click", function() {
-              if (location.hash != "#" + this.id) {
-                location.hash = this.id;
-              }
-            });
           }
         }
 
@@ -495,17 +550,6 @@
 
         // oldHash is a global variable
         var newHash = "#" + (window.location.hash || "");
-        var toggle = document.getElementById("nav-toggle");
-
-        if (newHash == "#nav") {
-          toggle.hash = oldHash;
-          if (toggle.hash == "") {
-            toggle.href = "#work";
-          }
-        } else {
-          toggle.hash = "#nav"
-        }
-
         oldHash = newHash;
 
         activeNav();
@@ -542,7 +586,6 @@
         }
       }
 
-
       /* <!-- - - - CONTENT - - - --> */
       // A (relatively) bad attempt to hide the email address from web bots.
       // This is *not* guaranteed to work. It even uses a crap string reverser!
@@ -578,36 +621,32 @@
           document.getElementById("email-text").innerHTML = "";
           history.replaceState( {} , '', oldHash );
           history.back();
-
         }
+      }
+
+      function navClose() {
+        history.replaceState( {} , '', oldHash );
+        history.back();
+        return false;
       }
 
       // Track the presence of work-item css rule
       var showAllWork = false;
       // Track hashchanges because of internet explorer :/
-      var oldURL;
+      var oldHash = "#work";
     </script>
 </head>
 
 <body id="ie-refresh">
   <div id="wrap">
     <header id="header">
-      <div style="visibility: hidden;" class="header-item">
-        &nbsp;
-      </div>
-      <!-- - - - CONTENT - - - -->
       <div class="header-item">
         <a href="/#work">
           Showcase
         </a>
       </div>
-      <div class="header-item">
-        <a id="nav-toggle" href="/#nav">
-          <i class="icon ion-navicon-round"></i>
-        </a>
-      </div>
     </header>
-    <div id="container">
+    <!--<div id="container">-->
       <nav id="nav">
         <div class="nav-item">
           <a href="/#work">Work</a>
@@ -619,6 +658,18 @@
           <a href="/#contact">Contact</a>
         </div>
       </nav>
+      <div id="nav-toggle">
+        <div id="nav-open">
+          <a href="/#nav">
+            <i class="icon ion-navicon-round"></i>
+          </a>
+        </div>
+        <div id="nav-close">
+          <a href="/#work" onclick="navClose()" >
+            <i class="icon ion-navicon-round"></i>
+          </a>
+        </div>
+      </div>
       <main id="body">
 
         <!-- About -->
@@ -681,9 +732,16 @@
 
         <!-- Email -->
         <section id="email">
-          <div id="email-text"> </div>
+          <div id="email-text">
+              <p id="robots" >Please enable JavaScript to see my email! I'm trying to hide it from the robots :o</p>
+              <a href="/#contact">Back</a>
+          </div>
         </section>
 
+        <!-- NoScript -->
+        <div class="noscript">
+          Please note that this website functions best when JavaScript is enabled.
+        </div>
         <!-- Work -->
         <article id="work">
           <section id="work-banner" class="work-item">
@@ -692,6 +750,7 @@
 
           <!-- - - - CONTENT - - - -->
           <article id="stargazer" class="work-item">
+          <a   href="/#stargazer">
             <div class="work-item-title"> Stargazer </div>
             <div class="work-item-text">
               A full summary should be found here. Covering both the high level relevance,
@@ -699,9 +758,11 @@
             </div>
             <img class="work-item-image" src="https://i.imgur.com/4g078qp.jpg">
             <img class="work-item-image" src="https://s-media-cache-ak0.pinimg.com/236x/4d/61/98/4d6198ac11927a4738e3cbce3b409a42.jpg">
+          </a>
           </article>
 
           <article id="firebrand" class="work-item">
+          <a   href="/#firebrand">
             <div class="work-item-title"> Firebrand </div>
             <div class="work-item-text">
               Longer works may require more in depth explanation. More details can
@@ -716,18 +777,22 @@
               Perhaps just a witty quote.
             </div>
             <img class="work-item-image" src="https://i.imgur.com/6oiiSrf.jpg">
+          </a>
           </article>
 
           <article id="endeavour" class="work-item">
+          <a   href="/#endeavour">
             <div class="work-item-title"> Endeavour </div>
             <div class="work-item-text">
               Short pieces of work may be self explanatory.
             </div>
             <img class="work-item-image" src="https://i.imgur.com/4MMa1lx.jpg">
             <img class="work-item-image" src="https://i.imgur.com/yQYqEghh.jpg">
+          </a>
           </article>
 
           <article id="gage" class="work-item">
+          <a   href="/#gage">
             <div class="work-item-title"> Gage </div>
             <div class="work-item-text">
               Keep the details short and relevant. But expand on why this piece is representative
@@ -739,18 +804,24 @@
             <div class="work-item-title"> Double Quote </div>
             <div class="work-item-title"> Double Emphasis </div>
             <img class="work-item-image" src="https://i.imgur.com/NauQkpU.jpg">
+          </a>
           </article>
 
           <section id="work-list">
-            <a class="work-list-link" href="/#">All</a>
+            <a class="work-list-link" href="/#work">All</a>
             <a class="work-list-link" href="/#stargazer">Stargazer</a>
             <a class="work-list-link" href="/#firebrand">Firebrand</a>
             <a class="work-list-link" href="/#endeavour">Endeavour</a>
             <a class="work-list-link" href="/#gage">Gage</a>
           </section>
+
+          <!-- NoScript -->
+          <a class="nohash" href="#work">
+            Enter
+          </a>
         </article>
       </main>
-    </div>
+    <!--</div>-->
   </div>
   <footer id="footer">
     <a href="https://github.com/ojourmel/showcase">

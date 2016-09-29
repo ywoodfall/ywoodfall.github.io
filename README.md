@@ -32,6 +32,7 @@ Here is the general list, in file order, of what needs to be changed:
 
   1. Set `work-item-title` as desired.
   2. Update the `work-item`s id to the same (lowercase, all one word, `hyphens-can-be-used`).
+  2. Update the `<a href>` directlt below the `work-item` to `"/#id"`, where id is the `work-item`s id.
   3. Set at least one `work-item-image` with the appropriate link (`href`).
   4. At the bottom, in the `work-list` section, add a `work-list-link` with an `href` to `/#id` where id is the same as the `work-item`s id.
 
