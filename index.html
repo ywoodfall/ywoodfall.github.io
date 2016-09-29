@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<!-- Author ojourmel   -->
+<!-- Author ojourmel (www.github.com/ojourmel)   -->
 <!-- Everything Inline -->
 <html>
   <head>
+
+    <!-- - - - CONTENT - - -  -->
     <title>Showcase</title>
+
+
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- Github, hamburger and social media icons -->
@@ -14,6 +18,11 @@
     <link href="https://fonts.googleapis.com/css?family=Crimson+Text" rel="stylesheet">
     <!-- Cursive font -->
     <link href="https://fonts.googleapis.com/css?family=Italianno" rel="stylesheet">
+
+    <!-- Internet Explorer... Sigh -->
+    <!--[if IE]>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    <![endif]-->
 
     <!-- CSS Reset -->
     <style>
@@ -74,7 +83,6 @@
       html,body {
         min-width:250px;
         height: 100%;
-        font-family: "Overpass", serif;
         font-family: 'Crimson Text', serif;
         font-weight: 400;
         background-color: #F9F9F9;
@@ -92,25 +100,26 @@
         margin-bottom: -2.5em;
       }
       #wrap:after {
-        content: "";
         display: block;
+        content: "";
         height: 2.5em;
-      }
-      #footer {
-        width: 80%;
-        margin: 0 auto;
-        height: 2.5em;
-        text-align: right;
-        opacity: 1;
       }
 
-      #header {
+      #header, #footer {
+        display: block;
         width: 80%;
-        margin: 0em auto;
+        margin: auto;
+      }
+      #footer {
+        height: 2.5em;
+        text-align: right;
+      }
+      #header {
         padding-top: 1.5em;
         padding-bottom: 3em;
         border-bottom: 1px solid #DDDDDD;
       }
+
       .header-item {
         width: 33.33%;
         height: 1.5em;
@@ -119,8 +128,6 @@
         position: relative;
         z-index: 99;
         font-size: 1.5em;
-      }
-      .header-item > a {
         line-height: 1.5em;
       }
       #nav-toggle {
@@ -128,95 +135,77 @@
         margin-left: 1em
       }
 
-      #nav {
-        display: none;
-      }
       #nav:target {
-        height: 80%;
+        display: block;
+        width: 80%;
         margin: auto;
         margin-top: 5em;
-        display: block;
       }
       .nav-item {
-        margin: 0em auto 1em;
+        margin: 1em auto;
         text-align: center;
         font-size: 1.5em;
       }
 
       #body {
-        margin: 2em auto;
+        margin: auto;
+        max-width: 1024px;
       }
       #nav:target + #body {
         display: none;
       }
 
-      #about {
-        display: none;
-      }
-      #about:target {
-        display: block;
-      }
-      .about-banner {
+      .about-banner, .contact-banner, .cursive-banner {
         display: block;
         width: 80%;
-        margin: 2em auto;
+        margin: 1.5em auto;
         font-size: 2em;
-        line-height: 1em;
         text-align: center;
-        opacity: 1;
       }
-      .about-image {
+      #work-banner {
+        width: 80%;
+        margin: 1.25em auto;
+        font-size: 2em;
+        line-height: 1.5em;
+        text-align: center;
+        padding: 0;
+        cursor: default;
+      }
+      .cursive-banner {
+        font-family: 'Italianno', cursive;
+        margin: .75em auto;
+        font-size: 3em;
+      }
+
+      .about-image, .about-image-caption, .work-item-image {
         display: block;
-        width: 90%;
+        max-width: 90%;
         position: relative;
         margin: 2em auto;
       }
       .about-image-caption {
-        display: block;
-        width: 90%;
-        position: relative;
+        margin-top: -2em;
+        margin-bottom: 1em;
         text-align: left;
-        margin: -1em auto -2em;
         font-size: 0.8em;
         opacity: 0.75
       }
-      .about-text {
-        display: block;
-        width: 80%;
-        margin: -1em auto 3em;
-        opacity: 0.75;
-        font-size: 1.125em;
-        line-height: 1.75em;
-        text-align: left;
-      }
-      .about-text + .about-text {
-        margin-top: -2em;
-      }
 
-      #contact {
-        display: none;
-      }
-      #contact:target {
-        display: block;
-      }
-      .contact-banner {
-        display: block;
-        width: 80%;
-        margin: 2em auto;
-        text-align: center;
-        font-size: 2em;
-        line-height: 1em;
-        opacity: 1;
-      }
-      .contact-text {
+      .about-text, .contact-text, .work-item-text {
         display: block;
         width: 80%;
         margin: 1em auto;
-        opacity: 0.75;
         font-size: 1.125em;
-        text-align: center;
-        line-height: 1.75em;
+        line-height: 1.5em;
+        opacity: 0.75;
       }
+      .about-text {
+        text-align: left;
+      }
+      .contact-text {
+        text-align: center;
+      }
+
       .contact-links {
         display: block;
         width: 80%;
@@ -225,77 +214,69 @@
       }
       .contact-link-item {
         display: inline-block;
-        margin: 1em;
-        width: 3em;
-      }
-      .contact-link-item > a {
-        display: block;
-        margin: auto;
+        margin: 0.375em;
+        margin: 0.33em;
+        margin: 0.25em;
+        width: 1.125em;
         font-size: 2.5em;
         text-align: center;
         border-radius: .125em;
       }
-      .contact-link-item > a > i {
-        text-align: center;
-      }
-      .contact-link-item:hover > a {
+      .contact-link-item:hover {
         background-color: #222222;
       }
-      .contact-link-item:hover > a > i {
+      .contact-link-item:hover > i {
         color: #F9F9F9;
       }
 
       #email {
-        display: none;
         position: fixed;
         z-index: 9999;
+        top: 0;
+        left: 0;
         width: 100%;
         height: 100%;
         text-align: center;
-        top: 0;
-        left: 0;
         background: black;
         background: rgba(0,0,0,0.8);
       }
-      #email:target {
-        display: block;
-        outline: none;
-      }
-      #email:target > #email-text {
-        display: block;
+      #email-text {
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-
-        font-size: 1.25em;
-        margin: auto;
         padding: 2em;
+        margin: auto;
+        transform: translate(-50%, -50%);
+        font-size: 1.25em;
         background: #F9F9F9;
         border-radius: 1em;
       }
-      #email:target > #email-text > a {
+      #email-text > a {
         unicode-bidi:bidi-override;
         direction:rtl;
+        font-family: monospace;
         text-decoration: underline;
         color: #6699ff;
       }
 
-      #work > .work-item:target {
+      .work-item:target {
         display: block;
       }
       .work-item:not(:target) {
         display: none;
       }
+      #work:target > .work-item {
+        display:block;
+      }
 
       #work-list {
         display: none;
-        width: 60%;
+        width: 80%;
         margin: 1em auto;
         text-align: center;
       }
-      #work-list > a{
-        opacity: 0.55;
+      .work-list-link {
+        opacity: 0.5;
         margin: 0 0 0 1em;
         font-size: 0.75em;
       }
@@ -307,113 +288,58 @@
       .work-item {
         margin: 1em auto;
         text-align: center;
-        width: 90%;
         position: relative;
         overflow: hidden;
         cursor: pointer;
       }
-      .work-item-title {
+      .work-item-title:first-of-type {
         position: absolute;
         top: calc(50% - 0.5em);
         bottom: 0;
         left: 0;
         right: 0;
         margin: auto;
-        opacity: 0;
         font-size: 2em;
-        transition: opacity 0.25s linear;
+        opacity: 0;
       }
-      .work-item:hover > .work-item-title{
+      .work-item:hover > .work-item-title:first-of-type {
         opacity: 0.75;
-        transition: opacity 0.25s linear;
       }
-      .work-item-image {
-        max-width: 100%;
+      .work-item-image:first-of-type {
         margin: auto;
+        max-width: 90%;
         opacity: 1;
-        transition: opacity 0.25s linear;
       }
-      .work-item:hover > .work-item-image{
+      .work-item:hover > .work-item-image:first-of-type {
         opacity: 0.5;
-        transition: opacity 0.25s linear;
       }
-      .work-item-text, .work-item-extra-text, .work-item-extra-image, .work-item-extra-title {
+      .work-item-title:first-of-type, .work-item-image:first-of-type {
+        transition: opacity 0.125s linear;
+      }
+
+      .work-item-title:not(:first-of-type), .work-item-image:not(:first-of-type), .work-item-text {
         display: none;
       }
 
       .work-item:target {
-        padding-bottom: 0;
         cursor: default
       }
-      .work-item:target * {
-        opacity: 1;
-      }
-      .work-item:target:hover * {
+      .work-item:target > .work-item-title, .work-item:target:hover > .work-item-title, .work-item:target:hover > .work-item-image {
         opacity: 1;
       }
       .work-item:target > .work-item-title {
+        display: block;
+        width: 80%;
         position: relative;
         margin: 1em auto;
         font-size: 2em;
-        font-weight: 500;
       }
-      .work-item:target > .work-item-image {
+      .work-item:target > .work-item-image, .work-item:target > .work-item-text {
         display: block;
-        width: 100%;
-        position: relative;
-        margin: 2em auto;
       }
-      .work-item:target > .work-item-text {
-        display: block;
-        width: 80%;
-        margin: 2em auto;
-        opacity: 0.75;
-      }
-      .work-item:target > .work-item-extra-title {
-        display: block;
-        width: 80%;
-        margin: 1em auto;
-        font-size: 2em;
-        font-weight: 500;
-      }
-      .work-item:target > .work-item-extra-image {
-        display: block;
-        width: 100%;
-        position: relative;
-        margin: 2em auto;
-      }
-      .work-item:target > .work-item-extra-text {
-        display: block;
-        width: 60%;
-        margin: 2em auto;
-        opacity: 0.75;
-      }
-
-      #work-banner {
-        width: 80%;
-        line-height: 1.5em;
-        font-size: 2em;
-        padding: 0;
-        cursor: default;
-      }
-
 
       .active {
         opacity: 1 !important;
-      }
-      .hidden {
-        visibility: hidden;
-      }
-      .cursive-banner {
-        font-family: 'Italianno', cursive;
-        display: block;
-        width: 80%;
-        margin: 1em auto;
-        font-size: 3em;
-        font-weight: 200;
-        line-height: 1em;
-        text-align: center;
-        opacity: 1;
       }
 
       .icon {
@@ -424,11 +350,18 @@
         padding: 0px 1px;
       }
 
+      /* Hide these normally, show them when targeted */
+      #nav, #about, #contact, #email {
+        display: none;
+      }
+      #nav:target, #about:target, #contact:target, #email:target {
+        display: block;
+      }
+
       /* Screens larger than 768 are treated as non-mobile */
-      @media (min-width: 769px) {
-        #body {
-          margin-top: 5em;
-          max-width: 1024px;
+      @media (min-width: 768px) {
+        #nav-toggle {
+          display: none;
         }
         #header {
           padding-top: 3em;
@@ -436,15 +369,11 @@
         }
         .header-item {
           height: auto;
-        }
-        .header-item > a {
           line-height: 1em;
-        }
-        #nav-toggle {
-          display: none;
         }
 
         #nav, #nav:target {
+          line-height: 1.5;
           display: block;
           width: 80%;
           margin: -2em auto 0em;
@@ -453,7 +382,6 @@
         .nav-item {
           margin: 0 0 0 1em;
           display: inline-block;
-          font-weight: 400;
           font-size: 1em;
         }
         .nav-item > a {
@@ -462,56 +390,62 @@
         .nav-item:hover > a {
           opacity: 1;
         }
+        .work-list-link:hover {
+          opacity: 1;
+        }
 
         /* TODO: maybe keep this, maybe not.
            It can make the state in consistent with the url... */
         #nav:target + #body {
           display: block;
         }
-        #work-banner {
-          width: 60%;
-        }
-        #work-list > a:hover {
-          opacity: 1;
-        }
 
-        .work-item {
-          width: 80%;
-        }
-        .work-item:target > .work-item-title {
-          margin-top: 0em;
-          font-size: 3em;
-        }
-        .work-item:target > .work-item-extra-title {
-          width: 60%;
-          margin: 2em auto;
-        }
-        .work-item:target > .work-item-text {
-          width: 60%;
-        }
-        .work-item:target > .work-item-extra-text {
-          width: 60%;
-        }
-
-        .about-banner {
-          width: 65%;
+        .work-item:target > .work-item-title, .work-item-text, .about-text, .contact-text, .about-banner, .contact-banner, .cursive-banner, #work-banner, .contact-links {
+          width: 65% !important;
         }
         .about-text {
-          width: 65%;
           line-height: 2em;
         }
+        .work-item:target > .work-item-title {
+          font-size: 3em;
+        }
+        .work-item-text {
+          margin: 2em auto;
+        }
+        .work-item-text + .work-item-text {
+          margin-top: -1.25em;
+        }
       }
-
     </style>
 
     <!-- Showcase JS - Vanilla.js -->
     <script>
 
-      // Add root server prefex to all anchor links (matching #)
+      // Set the "homepage" to /#work
+      document.addEventListener("DOMContentLoaded", function(event) {
+        if (location.hash == "" || location.hash == "#") {
+          location.hash = "#work";
+        }
+      });
+      window.addEventListener("hashchange", function(event) {
+        if (location.hash == "" || location.hash == "#") {
+          location.hash = "#work";
+        }
+      });
+
+      // Because IE doesn't recalculate css on history.back...
+      if (!!window.navigator.userAgent.match(/MSIE|Trident/)) {
+        window.addEventListener("hashchange", function(event) {
+          document.getElementById("ie-refresh").className = "z";
+          document.getElementById("ie-refresh").className = "";
+        });
+      }
+
+
+      // Add root server prefix to all anchor links (matching #)
       // A bit of a Github Pages hack. Allows for easy movement of index.html
       // Where ever it ends up, all the anchor links will work. Presents some
       // issues with external links being overridden
-      // TODO: Fix overriding external links, or hardcode server prefex
       document.addEventListener("DOMContentLoaded", function(event) {
 
         var l = document.getElementsByTagName("a");
@@ -525,15 +459,17 @@
 
         // If we are refreshing the page to /#nav, change the toggle href back to home
         if (location.hash == "#nav") {
-          document.getElementById("nav-toggle").hash = "# ";
+          document.getElementById("nav-toggle").hash = "#work ";
         }
 
-        // Add onclick links for all work-items
+        // Add onclick links for all work-items (except for the banner)
         var w = document.getElementsByClassName("work-item");
         for (var i=0; i<w.length; i++){
           if (w[i].id != "work-banner" ) {
             w[i].addEventListener("click", function() {
-              location.hash = this.id;
+              if (location.hash != "#" + this.id) {
+                location.hash = this.id;
+              }
             });
           }
         }
@@ -543,8 +479,8 @@
         document.getElementById("email").addEventListener("click", hideEmail);
 
         // Set up landing page work
-        manageWork();
         activeNav();
+        activeWorkList();
 
         // Attribution for anyone who wants to go looking:
         console.log("Website design and implementation Copyright 2016 Oliver Jourmel");
@@ -552,50 +488,29 @@
       });
 
       // Track hashchanges to update nav toggle href
+      // https://connect.microsoft.com/IE/feedback/details/828283/implement-hashchangeevent-oldurl-and-newurl
+      // :(
       window.addEventListener("hashchange", function(event) {
         window.scrollTo(0,0);
 
-        var oldHash = "#" + (event.oldURL.split("#")[1] || "");
-        var newHash = "#" + (event.newURL.split("#")[1] || "");
+        // oldHash is a global variable
+        var newHash = "#" + (window.location.hash || "");
         var toggle = document.getElementById("nav-toggle");
 
         if (newHash == "#nav") {
           toggle.hash = oldHash;
           if (toggle.hash == "") {
-            toggle.href = "#";
+            toggle.href = "#work";
           }
         } else {
           toggle.hash = "#nav"
         }
 
+        oldHash = newHash;
 
-        manageWork();
         activeNav();
         activeWorkList();
       });
-
-      // Show all work-item elements if no target is selected (homepage)
-      // Dynamicaly add or remove CSS rule
-      function manageWork() {
-        // If on homepage, show all work
-        var hash = location.hash.replace(/%20/g,"") || "#";
-
-        var hash = hash.replace(/%20/g,"");
-        var ss = document.styleSheets[document.styleSheets.length-1];
-        var r = ss.cssRules[ss.cssRules.length-1].cssText;
-        var showAll = ".work-item { display: block !important; }";
-        if ((hash == "#") || (hash == "#nav")) {
-          if (! showAllWork) {
-            ss.insertRule(showAll,0);
-            showAllWork = true;
-          }
-        } else {
-          if (showAllWork) {
-            ss.deleteRule(0);
-            showAllWork = false;
-          }
-        }
-      }
 
       // Indicate which nav item is currently targeted
       function activeNav() {
@@ -627,6 +542,8 @@
         }
       }
 
+
+      /* <!-- - - - CONTENT - - - --> */
       // A (relatively) bad attempt to hide the email address from web bots.
       // This is *not* guaranteed to work. It even uses a crap string reverser!
       function showEmail(event) {
@@ -659,24 +576,28 @@
       function hideEmail(event) {
         if (event.target == document.getElementById("email")) {
           document.getElementById("email-text").innerHTML = "";
-          window.history.back();
+          history.replaceState( {} , '', oldHash );
+          history.back();
+
         }
       }
 
       // Track the presence of work-item css rule
       var showAllWork = false;
+      // Track hashchanges because of internet explorer :/
+      var oldURL;
     </script>
 </head>
 
-    <!-- Content -->
-<body>
+<body id="ie-refresh">
   <div id="wrap">
-    <div id="header">
+    <header id="header">
       <div style="visibility: hidden;" class="header-item">
         &nbsp;
       </div>
+      <!-- - - - CONTENT - - - -->
       <div class="header-item">
-        <a href="/#">
+        <a href="/#work">
           Showcase
         </a>
       </div>
@@ -685,11 +606,11 @@
           <i class="icon ion-navicon-round"></i>
         </a>
       </div>
-    </div>
+    </header>
     <div id="container">
-      <div id="nav">
+      <nav id="nav">
         <div class="nav-item">
-          <a href="/#">Work</a>
+          <a href="/#work">Work</a>
         </div>
         <div class="nav-item">
           <a href="/#about">About</a>
@@ -697,16 +618,17 @@
         <div class="nav-item">
           <a href="/#contact">Contact</a>
         </div>
-      </div>
-      <div id="body">
+      </nav>
+      <main id="body">
 
         <!-- About -->
-        <div id="about">
+        <!-- - - - CONTENT - - - -->
+        <article id="about">
           <div class="about-banner">
             A personal mission statement. Something that holds true to the essence of you.
           </div>
           <img class="about-image" src="https://i.imgur.com/LXAXVPH.jpg">
-          <div class="about-image-caption">attribution</div>
+          <div class="about-image-caption"> attribution </div>
           <div class="cursive-banner">
             Valerie Page
           </div>
@@ -717,119 +639,123 @@
               build your credibility. Additionally, perhaps some details
               on recent work or life experiences.
           </div>
-
           <div class="about-text">
               More details on a particularly interesting project, hobby,
               or work experience. Show how your methodology in this specific
               example worked to produce a positive outcome, and how the
               generalization of that methodology will work in other scenarios.
           </div>
-
           <div class="about-text">
               Drive home your core principals and attributes. What is the
-              essential you. End with something operational or upbeat.
+              essential you. End with something inspirational or upbeat.
           </div>
 
           <img class="about-image" src="https://i.imgur.com/Xf5OcDy.jpg">
-          <div class="about-image-caption">source or comment</div>
-
-        </div>
+          <div class="about-image-caption"> source or comment </div>
+        </article>
 
         <!-- Contact -->
-        <div id="contact">
+        <!-- - - - CONTENT - - - -->
+        <article id="contact">
           <div class="contact-banner">
             Motivational encouragement of commitment!
           </div>
           <div class="contact-links">
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-twitter"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-googleplus"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-instagram"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-whatsapp"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-snapchat"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-pinterest"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-reddit"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-linkedin"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-tumblr"></i></a> </div>
-            <div class="contact-link-item"> <a href="/#contact"><i class="icon ion-social-facebook"></i></a> </div>
-            <div class="contact-link-item"> <a id="email-link" href="/#email"><i class="icon ion-ios-email"></i></a> </div>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-twitter"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-googleplus"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-instagram"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-whatsapp"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-snapchat"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-pinterest"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-reddit"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-linkedin"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-tumblr"></i></a>
+            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-facebook"></i></a>
+            <a id="email-link" class="contact-link-item" href="/#email"><i class="icon ion-ios-email"></i></a>
           </div>
           <div class="contact-text">
             Additional text to provide context to the flurry of social media links just provided. Perhaps an
             explanation of the email link.
           </div>
-        </div>
+        </article>
 
         <!-- Email -->
-        <div id="email">
-          <div class="hidden">Back</div>
-          <div id="email-text">
-          </div>
-        </div>
+        <section id="email">
+          <div id="email-text"> </div>
+        </section>
 
         <!-- Work -->
-        <div id="work">
-          <div id="work-banner" class="work-item">
+        <article id="work">
+          <section id="work-banner" class="work-item">
             -- a simple summation of your work, life, and hobbies.
-          </div>
+          </section>
 
-          <div id="stargazer" class="work-item">
+          <!-- - - - CONTENT - - - -->
+          <article id="stargazer" class="work-item">
             <div class="work-item-title"> Stargazer </div>
             <div class="work-item-text">
               A full summary should be found here. Covering both the high level relevance,
               as well as perhaps some interesting anecdotes of the work.
             </div>
             <img class="work-item-image" src="https://i.imgur.com/4g078qp.jpg">
-          </div>
+            <img class="work-item-image" src="https://s-media-cache-ak0.pinimg.com/236x/4d/61/98/4d6198ac11927a4738e3cbce3b409a42.jpg">
+          </article>
 
-          <div id="firebrand" class="work-item">
+          <article id="firebrand" class="work-item">
             <div class="work-item-title"> Firebrand </div>
             <div class="work-item-text">
               Longer works may require more in depth explanation. More details can
               follow additional images.
             </div>
             <img class="work-item-image" src="https://i.imgur.com/sT9VAyO.jpg">
-            <div class="work-item-extra-text">
+            <div class="work-item-text">
               A continuation of the summary found about, perhaps pointing out something interesting
               in the previous image.
             </div>
-            <div class="work-item-extra-title">
+            <div class="work-item-title">
               Perhaps just a witty quote.
             </div>
-            <img class="work-item-extra-image" src="https://i.imgur.com/6oiiSrf.jpg">
-          </div>
+            <img class="work-item-image" src="https://i.imgur.com/6oiiSrf.jpg">
+          </article>
 
-          <div id="endeavour" class="work-item">
+          <article id="endeavour" class="work-item">
             <div class="work-item-title"> Endeavour </div>
             <div class="work-item-text">
               Short pieces of work may be self explanatory.
             </div>
             <img class="work-item-image" src="https://i.imgur.com/4MMa1lx.jpg">
-          </div>
+            <img class="work-item-image" src="https://i.imgur.com/yQYqEghh.jpg">
+          </article>
 
-          <div id="gage" class="work-item">
+          <article id="gage" class="work-item">
             <div class="work-item-title"> Gage </div>
             <div class="work-item-text">
               Keep the details short and relevant. But expand on why this piece is representative
               of your value and worth.
             </div>
+            <div class="work-item-text">
+              Break content up into paragraphs if things get a bit long winded.
+            </div>
+            <div class="work-item-title"> Double Quote </div>
+            <div class="work-item-title"> Double Emphasis </div>
             <img class="work-item-image" src="https://i.imgur.com/NauQkpU.jpg">
-          </div>
+          </article>
 
-          <div id="work-list">
-            <a href="/#">All</a>
-            <a href="/#stargazer">Stargazer</a>
-            <a href="/#firebrand">Firebrand</a>
-            <a href="/#endeavour">Endeavour</a>
-            <a href="/#gage">Gage</a>
-          </div>
-        </div>
-      </div>
+          <section id="work-list">
+            <a class="work-list-link" href="/#">All</a>
+            <a class="work-list-link" href="/#stargazer">Stargazer</a>
+            <a class="work-list-link" href="/#firebrand">Firebrand</a>
+            <a class="work-list-link" href="/#endeavour">Endeavour</a>
+            <a class="work-list-link" href="/#gage">Gage</a>
+          </section>
+        </article>
+      </main>
     </div>
   </div>
-  <div id="footer">
+  <footer id="footer">
     <a href="https://github.com/ojourmel/showcase">
       <i class="icon ion-social-github"></i>
     </a>
-  </div>
+  </footer>
 </body>
 </html>
