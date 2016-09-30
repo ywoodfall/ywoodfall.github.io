@@ -7,8 +7,8 @@
     <!-- - - - CONTENT - - -  -->
     <title>Showcase</title>
 
-
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="content-type" content="text/ html;charset=utf-8" />
 
     <!-- Github, hamburger and social media icons -->
     <!-- Thanks to http://ionicons.com/ -->
@@ -79,6 +79,15 @@
     <!-- Mobile First -->
     <style>
 
+      /* Ugly scrollbar is consistently ugly in non-webkit browsers */
+      html {
+        overflow-y: scroll
+      }
+      /* But hidden in webkit browsers */
+      html::-webkit-scrollbar {
+        display: none;
+      }
+
       /* Disallow very small viewports*/
       html,body {
         min-width:250px;
@@ -118,10 +127,11 @@
         padding-top: 1.5em;
         padding-bottom: 0.75em;
         border-bottom: 1px solid #DDDDDD;
+        text-align: center;
       }
 
       .header-item {
-        display: block;
+        display: inline-block;
         margin: auto;
         height: 1.5em;
         text-align: center;
@@ -164,6 +174,7 @@
         margin-top: 5em;
       }
       .nav-item {
+        display: block;
         margin: 1em auto;
         text-align: center;
         font-size: 1.5em;
@@ -194,7 +205,7 @@
         cursor: default;
       }
       .cursive-banner {
-        font-family: 'Italianno', cursive;
+        font-family: 'Italianno', cursive, serif;
         margin: .75em auto;
         font-size: 3em;
       }
@@ -276,12 +287,12 @@
       #email-text > a {
         unicode-bidi:bidi-override;
         direction:rtl;
-        font-family: monospace;
+        font-family: monospace, serif;
         text-decoration: underline;
         color: #6699ff;
       }
       #robots {
-        font-family: monospace;
+        font-family: monospace, serif;
       }
 
       .work-item:target {
@@ -314,8 +325,17 @@
         margin: 1em auto;
         text-align: center;
         position: relative;
-        overflow: hidden;
-        cursor: pointer;
+      }
+      .work-item > a {
+        position:absolute;
+        width:100%;
+        height:100%;
+        top:0;
+        left:0;
+        z-index:1;
+        background-color:white;
+        opacity: 0;
+        filter: alpha(opacity=1);
       }
       .work-item-title:first-of-type {
         position: absolute;
@@ -327,7 +347,7 @@
         font-size: 2em;
         opacity: 0;
       }
-      .work-item:hover > a > .work-item-title:first-of-type {
+      .work-item:hover > .work-item-title:first-of-type {
         opacity: 0.75;
       }
       .work-item-image:first-of-type {
@@ -335,7 +355,7 @@
         max-width: 90%;
         opacity: 1;
       }
-      .work-item:hover > a > .work-item-image:first-of-type {
+      .work-item:hover > .work-item-image:first-of-type {
         opacity: 0.5;
       }
       .work-item-title:first-of-type, .work-item-image:first-of-type {
@@ -346,20 +366,20 @@
         display: none;
       }
 
-      .work-item:target {
-        cursor: default
-      }
-      .work-item:target > a > .work-item-title, .work-item:target:hover > a > .work-item-title, .work-item:target:hover > a > .work-item-image {
+      .work-item:target > a {
+        display: none;
+     }
+      .work-item:target > .work-item-title, .work-item:target:hover > .work-item-title, .work-item:target:hover > .work-item-image {
         opacity: 1;
       }
-      .work-item:target > a > .work-item-title {
+      .work-item:target > .work-item-title {
         display: block;
         width: 80%;
         position: relative;
         margin: 1em auto;
         font-size: 2em;
       }
-      .work-item:target > a > .work-item-image, .work-item:target > a > .work-item-text {
+      .work-item:target > .work-item-image, .work-item:target > .work-item-text {
         display: block;
       }
 
@@ -383,7 +403,20 @@
         display: block;
       }
 
-      .noscript, .nohash {
+      /* Handle anchor page jumps */
+      #work:target::before, #about:target::before, #contact:target::before, .work-item:target::before {
+        display: block;
+        content: "";
+        height: 6em;
+        margin: -6em 0 0;
+      }
+      /* Fix header, nav z-index */
+      .header-item, .nav-item, #nav-open, #nav-close {
+        position: relative;
+        z-index:1;
+      }
+
+      .noscript {
         display: none;
       }
 
@@ -413,11 +446,9 @@
           margin: 2em 0 0 1em;
           display: inline-block;
           font-size: 1em;
-        }
-        .nav-item > a {
           opacity: 0.5;
         }
-        .nav-item:hover > a {
+        .nav-item:hover {
           opacity: 1;
         }
         .work-list-link:hover {
@@ -430,13 +461,13 @@
           display: block;
         }
 
-        .work-item:target > a > .work-item-title, .work-item-text, .about-text, .contact-text, .about-banner, .contact-banner, .cursive-banner, #work-banner, .contact-links {
+        .work-item:target > .work-item-title, .work-item-text, .about-text, .contact-text, .about-banner, .contact-banner, .cursive-banner, #work-banner, .contact-links {
           width: 65% !important;
         }
         .about-text {
           line-height: 2em;
         }
-        .work-item:target > a > .work-item-title {
+        .work-item:target > .work-item-title {
           font-size: 3em;
         }
         .work-item-text {
@@ -444,6 +475,15 @@
         }
         .work-item-text + .work-item-text {
           margin-top: -1.25em;
+        }
+
+        /* Internet explorer refuses to respect #body {max-width}
+         * Additionaly, HTML conditional comments are not supported IE 10+
+         * So this has to get added to every browsers style sheet. */
+        #work, #about, #contact {
+          max-width: 1024px;
+          margin-right: auto;
+          margin-left: auto;
         }
       }
     </style>
@@ -454,7 +494,7 @@
         .noscript {
           display: block;
           width: 80%;
-          margin: 1em auto -1em;
+          margin: 1em auto;
           color: #330000;
           text-align: center;
           font-size: 2em;
@@ -467,29 +507,29 @@
           border-width: 2px;
           border-color: #A94442;
         }
-        #about:target ~ .noscript, #contact:target ~ .noscript, #email:target ~ .noscript, #nav:target ~ #body > .noscript {
-          display: none;
-        }
-        .nohash {
+        .noscript > a {
           display:block;
-          margin: 2em auto;
+          margin: 0.5em auto;
           text-align: center;
           font-size: 2em;
           line-height: 1.5em;
           text-decoration: underline !important;
           color: #6699ff !important;
         }
-        #work:target > .nohash, :target ~ .nohash, :target ~ #work > .nohash {
-          display: none;
+
+        :target ~ .noscript, :target > .noscript, :target ~ #work > .noscript, :target ~ #body > #work > .noscript {
+          display: none !important;
+        }
+        #email-text {
+          padding: 1em;
         }
         #email-text > a {
+          display:inline-block;
+          margin-top: 1em;
           unicode-bidi:bidi-override;
           direction:ltr;
         }
-        @media (min-width: 768px) {
-          .noscript {
-          }
-        }
+
       </style>
     </noscript>
 
@@ -508,18 +548,20 @@
         }
       });
 
-      // Because browsers don't always recalculate css on history.back...
+      // Browsers don't always recalculate css on history.back,
+      // and the history.onpopstate event doesn't fire if just the hash changed in Internet Explorer,
+      // so as a result we must do this ugly JavaScript *every* single time we change pages...
       window.addEventListener("hashchange", function(event) {
         document.getElementById("ie-refresh").className = "z";
         document.getElementById("ie-refresh").className = "";
       });
 
-      // Add root server prefix to all anchor links (matching #)
-      // A bit of a Github Pages hack. Allows for easy movement of index.html
-      // Where ever it ends up, all the anchor links will work. Presents some
-      // issues with external links being overridden
       document.addEventListener("DOMContentLoaded", function(event) {
 
+        // Add root server prefix to all anchor links (matching #)
+        // A bit of a Github Pages hack. Allows for easy movement of index.html
+        // Where ever it ends up, all the anchor links will work. Presents some
+        // issues with external links (that contain #'s) being overridden
         var l = document.getElementsByTagName("a");
         var b = location.pathname;
         for (var i=0; i<l.length; i++){
@@ -624,9 +666,10 @@
         }
       }
 
-      function navClose() {
+      function navClose(event) {
         history.replaceState( {} , '', oldHash );
         history.back();
+        event.preventDefault();
         return false;
       }
 
@@ -640,171 +683,154 @@
 <body id="ie-refresh">
   <div id="wrap">
     <header id="header">
-      <div class="header-item">
-        <a href="/#work">
-          Showcase
-        </a>
-      </div>
+      <a class="header-item" href="/#work">
+        Showcase
+      </a>
     </header>
-    <!--<div id="container">-->
       <nav id="nav">
-        <div class="nav-item">
-          <a href="/#work">Work</a>
-        </div>
-        <div class="nav-item">
-          <a href="/#about">About</a>
-        </div>
-        <div class="nav-item">
-          <a href="/#contact">Contact</a>
-        </div>
+        <a class="nav-item" href="/#work">Work</a>
+        <a class="nav-item" href="/#about">About</a>
+        <a class="nav-item" href="/#contact">Contact</a>
       </nav>
       <div id="nav-toggle">
-        <div id="nav-open">
-          <a href="/#nav">
-            <i class="icon ion-navicon-round"></i>
-          </a>
-        </div>
-        <div id="nav-close">
-          <a href="/#work" onclick="navClose()" >
-            <i class="icon ion-navicon-round"></i>
-          </a>
-        </div>
+        <a id="nav-open" href="/#nav">
+          <i class="icon ion-navicon-round"></i>
+        </a>
+        <a id="nav-close" href="/#work" onclick="navClose(event)">
+          <i class="icon ion-navicon-round"></i>
+        </a>
       </div>
       <main id="body">
 
         <!-- About -->
         <!-- - - - CONTENT - - - -->
         <article id="about">
-          <div class="about-banner">
+          <h1 class="about-banner">
             A personal mission statement. Something that holds true to the essence of you.
-          </div>
+          </h1>
           <img class="about-image" src="https://i.imgur.com/LXAXVPH.jpg">
-          <div class="about-image-caption"> attribution </div>
-          <div class="cursive-banner">
+          <p class="about-image-caption"> attribution </p>
+          <h1 class="cursive-banner">
             Valerie Page
-          </div>
-          <div class="about-text">
-              Introductory paragraph that explains a bit about who you
-              are, and what you are all about. Perhaps some details about
-              your background, education, and work experience. This can help
-              build your credibility. Additionally, perhaps some details
-              on recent work or life experiences.
-          </div>
-          <div class="about-text">
-              More details on a particularly interesting project, hobby,
-              or work experience. Show how your methodology in this specific
-              example worked to produce a positive outcome, and how the
-              generalization of that methodology will work in other scenarios.
-          </div>
-          <div class="about-text">
-              Drive home your core principals and attributes. What is the
-              essential you. End with something inspirational or upbeat.
-          </div>
+          </h1>
+          <p class="about-text">
+            Introductory paragraph that explains a bit about who you
+            are, and what you are all about. Perhaps some details about
+            your background, education, and work experience. This can help
+            build your credibility. Additionally, perhaps some details
+            on recent work or life experiences.
+          </p>
+          <p class="about-text">
+            More details on a particularly interesting project, hobby,
+            or work experience. Show how your methodology in this specific
+            example worked to produce a positive outcome, and how the
+            generalization of that methodology will work in other scenarios.
+          </p>
+          <p class="about-text">
+            Drive home your core principals and attributes. What is the
+            essential you. End with something inspirational or upbeat.
+          </p>
 
           <img class="about-image" src="https://i.imgur.com/Xf5OcDy.jpg">
-          <div class="about-image-caption"> source or comment </div>
+          <p class="about-image-caption"> source or comment </p>
         </article>
 
         <!-- Contact -->
         <!-- - - - CONTENT - - - -->
         <article id="contact">
-          <div class="contact-banner">
+          <h1 class="contact-banner">
             Motivational encouragement of commitment!
-          </div>
-          <div class="contact-links">
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-twitter"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-googleplus"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-instagram"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-whatsapp"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-snapchat"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-pinterest"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-reddit"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-linkedin"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-tumblr"></i></a>
-            <a class="contact-link-item" href="/#contact"><i class="icon ion-social-facebook"></i></a>
+          </h1>
+          <section class="contact-links">
+            <a class="contact-link-item" href="https://twitter.com/"><i class="icon ion-social-twitter"></i></a>
+            <a class="contact-link-item" href="https://plus.google.com/"><i class="icon ion-social-googleplus"></i></a>
+            <a class="contact-link-item" href="https://www.instagram.com/"><i class="icon ion-social-instagram"></i></a>
+            <a class="contact-link-item" href="https://www.whatsapp.com/"><i class="icon ion-social-whatsapp"></i></a>
+            <a class="contact-link-item" href="https://www.snapchat.com"><i class="icon ion-social-snapchat"></i></a>
+            <a class="contact-link-item" href="https://www.pinterest.com/"><i class="icon ion-social-pinterest"></i></a>
+            <a class="contact-link-item" href="https://www.reddit.com/"><i class="icon ion-social-reddit"></i></a>
+            <a class="contact-link-item" href="https://www.linkedin.com/"><i class="icon ion-social-linkedin"></i></a>
+            <a class="contact-link-item" href="https://www.tumblr.com/"><i class="icon ion-social-tumblr"></i></a>
+            <a class="contact-link-item" href=""><i class="icon ion-social-facebook"></i></a>
             <a id="email-link" class="contact-link-item" href="/#email"><i class="icon ion-ios-email"></i></a>
-          </div>
-          <div class="contact-text">
+          </section>
+          <p class="contact-text">
             Additional text to provide context to the flurry of social media links just provided. Perhaps an
             explanation of the email link.
-          </div>
+          </p>
         </article>
 
         <!-- Email -->
         <section id="email">
           <div id="email-text">
-              <p id="robots" >Please enable JavaScript to see my email! I'm trying to hide it from the robots :o</p>
-              <a href="/#contact">Back</a>
+            <p id="robots">Please enable JavaScript to see my email! I'm trying to hide it from the robots :o</p>
+            <a href="/#contact">Back</a>
           </div>
         </section>
 
-        <!-- NoScript -->
-        <div class="noscript">
-          Please note that this website functions best when JavaScript is enabled.
-        </div>
         <!-- Work -->
         <article id="work">
-          <section id="work-banner" class="work-item">
+          <h1 id="work-banner" class="work-item">
             -- a simple summation of your work, life, and hobbies.
-          </section>
+          </h1>
 
           <!-- - - - CONTENT - - - -->
           <article id="stargazer" class="work-item">
-          <a   href="/#stargazer">
-            <div class="work-item-title"> Stargazer </div>
-            <div class="work-item-text">
+          <a href="/#stargazer"></a>
+            <h1 class="work-item-title"> Stargazer </h1>
+            <p class="work-item-text">
               A full summary should be found here. Covering both the high level relevance,
               as well as perhaps some interesting anecdotes of the work.
-            </div>
+            </p>
             <img class="work-item-image" src="https://i.imgur.com/4g078qp.jpg">
             <img class="work-item-image" src="https://s-media-cache-ak0.pinimg.com/236x/4d/61/98/4d6198ac11927a4738e3cbce3b409a42.jpg">
-          </a>
           </article>
 
           <article id="firebrand" class="work-item">
-          <a   href="/#firebrand">
-            <div class="work-item-title"> Firebrand </div>
-            <div class="work-item-text">
+          <a href="/#firebrand"></a>
+            <h1 class="work-item-title"> Firebrand </h1>
+            <p class="work-item-text">
               Longer works may require more in depth explanation. More details can
               follow additional images.
-            </div>
+            </p>
             <img class="work-item-image" src="https://i.imgur.com/sT9VAyO.jpg">
-            <div class="work-item-text">
+            <p class="work-item-text">
               A continuation of the summary found about, perhaps pointing out something interesting
               in the previous image.
-            </div>
-            <div class="work-item-title">
+            </p>
+            <h1 class="work-item-title">
               Perhaps just a witty quote.
-            </div>
+            </h1>
             <img class="work-item-image" src="https://i.imgur.com/6oiiSrf.jpg">
-          </a>
           </article>
 
           <article id="endeavour" class="work-item">
-          <a   href="/#endeavour">
-            <div class="work-item-title"> Endeavour </div>
-            <div class="work-item-text">
+          <a href="/#endeavour"></a>
+            <h1 class="work-item-title"> Endeavour </h1>
+            <p class="work-item-text">
               Short pieces of work may be self explanatory.
-            </div>
+            </p>
             <img class="work-item-image" src="https://i.imgur.com/4MMa1lx.jpg">
             <img class="work-item-image" src="https://i.imgur.com/yQYqEghh.jpg">
-          </a>
           </article>
 
           <article id="gage" class="work-item">
-          <a   href="/#gage">
-            <div class="work-item-title"> Gage </div>
-            <div class="work-item-text">
+          <a href="/#gage"></a>
+            <h1 class="work-item-title"> Gage </h1>
+            <p class="work-item-text">
               Keep the details short and relevant. But expand on why this piece is representative
               of your value and worth.
-            </div>
-            <div class="work-item-text">
+            </p>
+            <p class="work-item-text">
               Break content up into paragraphs if things get a bit long winded.
-            </div>
-            <div class="work-item-title"> Double Quote </div>
-            <div class="work-item-title"> Double Emphasis </div>
+            </p>
+            <h1 class="work-item-title">
+              Double Quote
+            </h1>
+            <h1 class="work-item-title">
+              Double Emphasis
+            </h1>
             <img class="work-item-image" src="https://i.imgur.com/NauQkpU.jpg">
-          </a>
           </article>
 
           <section id="work-list">
@@ -816,12 +842,12 @@
           </section>
 
           <!-- NoScript -->
-          <a class="nohash" href="#work">
-            Enter
-          </a>
+          <section class="noscript">
+            <p>Please note that this website functions best when JavaScript is enabled.</p>
+            <a href="#work">Enter</a>
+          </section>
         </article>
       </main>
-    <!--</div>-->
   </div>
   <footer id="footer">
     <a href="https://github.com/ojourmel/showcase">
